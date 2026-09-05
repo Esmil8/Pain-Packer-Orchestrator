@@ -8,6 +8,7 @@ Copy the `.opencode/` folder into your project root. OpenCode automatically load
 
 ```bash
 cp -r /path/to/pain-packer-orchestrator/.opencode /your/project/
+cd to orquestrator project then >> cp -r .opencode /home/youruser/Documents/Project/yourporject/
 ```
 
 Restart OpenCode. The plugin initializes with default configuration.

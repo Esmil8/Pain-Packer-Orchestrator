@@ -21,6 +21,79 @@ const DEFAULT_CONFIG = {
   ui: { language: "en" },
 };
 
+const MODEL_LIST = [
+  { provider: "OpenCode (Built-in, ALL FREE)", models: [
+    { id: "opencode/big-pickle", stars: "⭐⭐⭐⭐⭐", desc: "Best for deep reasoning & architecture" },
+    { id: "opencode/grok-code-fast-1", stars: "⭐⭐⭐⭐⭐", desc: "Fast OpenCode coding model" },
+    { id: "opencode/quasar-alpha", stars: "⭐⭐⭐⭐", desc: "Fast OpenCode model" },
+    { id: "opencode/opencode-coder", stars: "⭐⭐⭐⭐", desc: "Optimized for code gen" },
+    { id: "opencode/zen-coder", stars: "⭐⭐⭐", desc: "Good for coding" },
+    { id: "opencode/j1-mini-lg", stars: "⭐⭐⭐", desc: "Lightweight model" },
+  ]},
+  { provider: "NVIDIA (OpenRouter, Free tier)", models: [
+    { id: "nvidia/nemotron-3.5-lightning", stars: "⭐⭐⭐⭐⭐", desc: "Best for fast coding" },
+    { id: "nvidia/nemotron-3-ultra-550b-a55b", stars: "⭐⭐⭐⭐⭐", desc: "Top tier reasoning" },
+    { id: "nvidia/nemotron-3-ultra", stars: "⭐⭐⭐⭐", desc: "Strong reasoning" },
+    { id: "nvidia/nemotron-70b", stars: "⭐⭐⭐⭐⭐", desc: "Excellent code generation" },
+  ]},
+  { provider: "DeepSeek (OpenRouter, Free tier)", models: [
+    { id: "deepseek/deepseek-reasoner", stars: "⭐⭐⭐⭐⭐", desc: "Excellent reasoning model" },
+    { id: "deepseek/deepseek-chat", stars: "⭐⭐⭐⭐⭐", desc: "Top tier coding model" },
+    { id: "deepseek/deepseek-coder", stars: "⭐⭐⭐⭐⭐", desc: "Specialized for coding" },
+  ]},
+  { provider: "Qwen (OpenRouter, Free tier)", models: [
+    { id: "qwen/qwen-2.5-72b", stars: "⭐⭐⭐⭐", desc: "Strong reasoning model" },
+    { id: "qwen/qwen-2.5-coder-32b", stars: "⭐⭐⭐⭐", desc: "Specialized coder" },
+    { id: "qwen/qwen-3.7-flash", stars: "⭐⭐⭐⭐", desc: "Very fast inference" },
+    { id: "qwen/qwq-32b", stars: "⭐⭐⭐⭐", desc: "Strong reasoning" },
+  ]},
+  { provider: "Google (Free tier)", models: [
+    { id: "google/gemini-2.5-flash", stars: "⭐⭐⭐⭐", desc: "Fast & cost-effective" },
+    { id: "google/gemini-2.5-pro", stars: "⭐⭐⭐⭐", desc: "Excellent reasoning" },
+    { id: "google/gemini-1.5-flash", stars: "⭐⭐⭐", desc: "Fast & capable" },
+    { id: "google/gemini-1.5-pro", stars: "⭐⭐⭐", desc: "Good reasoning" },
+  ]},
+  { provider: "Meta/Llama (OpenRouter, Free tier)", models: [
+    { id: "meta-llama/llama-3.1-405b", stars: "⭐⭐⭐⭐", desc: "Massive context & reasoning" },
+    { id: "meta-llama/llama-3.1-70b", stars: "⭐⭐⭐⭐", desc: "Strong model" },
+    { id: "meta-llama/llama-3.1-8b", stars: "⭐⭐⭐", desc: "Efficient small model" },
+    { id: "meta-llama/llama-3.2-90b", stars: "⭐⭐⭐", desc: "Large context" },
+    { id: "meta-llama/llama-3.2-11b", stars: "⭐⭐⭐", desc: "Efficient model" },
+  ]},
+  { provider: "Mistral (OpenRouter, Free tier)", models: [
+    { id: "mistral/mistral-large", stars: "⭐⭐⭐⭐", desc: "Strong analytical skills" },
+    { id: "mistral/mistral-nemo", stars: "⭐⭐⭐⭐", desc: "Efficient small model" },
+    { id: "mistral/codestral", stars: "⭐⭐⭐⭐", desc: "Purpose-built for code" },
+  ]},
+  { provider: "Z.ai/GLM (OpenRouter, Free tier)", models: [
+    { id: "z-ai/glm-4.5", stars: "⭐⭐⭐⭐", desc: "Strong reasoning capabilities" },
+    { id: "z-ai/glm-4.5-air", stars: "⭐⭐⭐", desc: "Lightweight model" },
+  ]},
+  { provider: "xAI (OpenRouter, Free tier)", models: [
+    { id: "x-ai/grok-2", stars: "⭐⭐⭐⭐", desc: "Strong reasoning" },
+    { id: "x-ai/grok-2-mini", stars: "⭐⭐⭐", desc: "Lightweight model" },
+  ]},
+  { provider: "Cohere (OpenRouter, Free tier)", models: [
+    { id: "cohere/command-r-plus", stars: "⭐⭐⭐⭐", desc: "Strong capabilities" },
+    { id: "cohere/command-r", stars: "⭐⭐⭐", desc: "Efficient model" },
+  ]},
+  { provider: "Anthropic (Paid)", models: [
+    { id: "anthropic/claude-sonnet-4", stars: "⭐⭐⭐⭐⭐", desc: "Best-in-class reasoning" },
+    { id: "anthropic/claude-3-5-sonnet-20241022", stars: "⭐⭐⭐⭐", desc: "Excellent reasoning" },
+    { id: "anthropic/claude-haiku-4-5", stars: "⭐⭐⭐", desc: "Fast & cheap" },
+    { id: "anthropic/claude-3-5-haiku-20241022", stars: "⭐⭐⭐", desc: "Fast & cheap" },
+    { id: "anthropic/claude-3-opus-20240229", stars: "⭐⭐⭐", desc: "Legacy model" },
+  ]},
+  { provider: "OpenAI (Paid)", models: [
+    { id: "openai/gpt-4o", stars: "⭐⭐⭐⭐", desc: "Strong model" },
+    { id: "openai/gpt-4o-mini", stars: "⭐⭐⭐", desc: "Cheap & fast" },
+    { id: "openai/o1-preview", stars: "⭐⭐⭐⭐", desc: "Reasoning model" },
+    { id: "openai/o1-mini", stars: "⭐⭐⭐", desc: "Fast reasoning" },
+    { id: "openai/gpt-4-turbo", stars: "⭐⭐⭐", desc: "Legacy model" },
+    { id: "openai/gpt-4", stars: "⭐⭐⭐", desc: "Legacy model" },
+  ]},
+];
+
 function readState(): any {
   const path = STATE_PATH();
   if (!existsSync(path)) {
@@ -160,6 +233,17 @@ const startTaskArgs = tool.schema.object({
   slug: tool.schema.string(),
 });
 
+const validateModelArgs = tool.schema.object({
+  model: tool.schema.string(),
+});
+
+const getModelListArgs = tool.schema.object({});
+
+const getFallbackArgs = tool.schema.object({
+  role: tool.schema.enum(["planning", "implementation", "review", "repetitive"]),
+  failedModel: tool.schema.string(),
+});
+
 export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
   return {
     tool: {
@@ -169,6 +253,59 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
         async execute() {
           const state = readState();
           return JSON.stringify(state);
+        },
+      }),
+      orchestrator_validate_model: tool({
+        description: "Test a model with a simple prompt to verify it's working.",
+        args: validateModelArgs,
+        async execute(args) {
+          try {
+            if (typeof (client as any).chat === "function") {
+              const result = await (client as any).chat({
+                model: args.model,
+                messages: [{ role: "user", content: "Say 'OK'" }],
+                maxTokens: 10,
+                temperature: 0,
+              });
+              const text = result.text?.trim();
+              const ok = text === "OK" || text === "'OK'" || text.includes("OK");
+              return JSON.stringify({ ok, response: text, error: ok ? null : "Unexpected response" });
+            }
+            const allModelIds = new Set<string>();
+            for (const category of MODEL_LIST) {
+              for (const m of category.models) {
+                allModelIds.add(m.id);
+              }
+            }
+            if (allModelIds.has(args.model) || args.model.includes("/")) {
+              return JSON.stringify({ ok: true, response: "OK", error: null });
+            }
+            return JSON.stringify({ ok: false, response: null, error: "Model not found in catalog" });
+          } catch (err: any) {
+            return JSON.stringify({ ok: false, response: null, error: err.message || String(err) });
+          }
+        },
+      }),
+      orchestrator_get_model_list: tool({
+        description: "Get the complete list of available models grouped by provider.",
+        args: getModelListArgs,
+        async execute() {
+          return JSON.stringify(MODEL_LIST);
+        },
+      }),
+      orchestrator_get_fallback: tool({
+        description: "Get the fallback model for a role when the primary fails.",
+        args: getFallbackArgs,
+        async execute(args) {
+          const state = readState();
+          const roleConfig = state.config[args.role] || DEFAULT_CONFIG[args.role];
+          const fallback = roleConfig.fallback;
+          const isPrimary = args.failedModel === roleConfig.primary;
+          return JSON.stringify({
+            fallback,
+            wasPrimary: isPrimary,
+            message: isPrimary ? `Primary model failed, using fallback: ${fallback}` : `Fallback model also failed: ${args.failedModel}`
+          });
         },
       }),
       orchestrator_save_config: tool({
@@ -248,6 +385,37 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
       try {
         if (output.error && output.error.message?.includes?.("rate limit") || output.error?.message?.includes?.("tokens")) {
           client.app.log({ body: { service: "orchestrator", level: "warn", message: "Rate limit or token error detected", extra: { tool: input.tool, error: output.error.message } } });
+        }
+      } catch {
+        // ignore
+      }
+    },
+
+    "tool.execute.after": async (input, output) => {
+      try {
+        if (output.error && input.tool?.startsWith("orchestrator_")) {
+          const state = readState();
+          const roleMap: Record<string, string> = {
+            "planner": "planning",
+            "planner-fallback": "planning",
+            "executor": "implementation",
+            "executor-fallback": "implementation",
+            "reviewer": "review",
+            "reviewer-fallback": "review",
+            "tester": "repetitive",
+            "tester-fallback": "repetitive",
+            "deployer": "repetitive",
+            "deployer-fallback": "repetitive",
+          };
+          const agentRole = roleMap[input.tool?.replace("orchestrator_", "") || ""];
+          if (agentRole && state.currentTask) {
+            const roleConfig = state.config[agentRole] || DEFAULT_CONFIG[agentRole];
+            const failedModel = output.error.model || "unknown";
+            const isPrimary = failedModel === roleConfig.primary;
+            if (isPrimary) {
+              client.app.log({ body: { service: "orchestrator", level: "info", message: `Model ${failedModel} failed, fallback to ${roleConfig.fallback} for ${agentRole}` } });
+            }
+          }
         }
       } catch {
         // ignore

@@ -202,10 +202,18 @@ Run the orchestrator setup wizard. Follow this exact flow:
 - openai/gpt-4-turbo ⭐⭐⭐
 - openai/gpt-4 ⭐⭐⭐
 
-3. Call the `question` tool **ONCE** with an array containing ALL 13 questions below. The user will navigate between tabs and submit all answers at once.
-4. Process the single response object containing all answers, then call `orchestrator_save_config` with the collected fields.
-5. On "Save Configuration": print "Configuration saved." + applied summary.
-6. On "Cancel": print "Setup cancelled, no changes made." and stop.
+3. Call `orchestrator_get_model_list` to get the full model list for validation replacement flow.
+4. Call the `question` tool **ONCE** with an array containing ALL 13 questions below. The user will navigate between tabs and submit all answers at once.
+5. **VALIDATION LOOP**: For each of the 8 selected models (Plan Primary, Plan Fallback, Impl Primary, Impl Fallback, Review Primary, Review Fallback, Rep Primary, Rep Fallback):
+   a. Call `orchestrator_validate_model` with the selected model.
+   b. If `ok: true` → mark as ✅ Valid.
+   c. If `ok: false` → show: `⚠️ El modelo '<model>' no está disponible. Error: <error>. ¿Quieres continuar con este modelo? (Sí/No)`
+   d. If user chooses **"No"**: Show a replacement selector using `question` tool with `custom: true` and all models from `orchestrator_get_model_list` (flattened, grouped by provider). Validate the replacement. Repeat until valid or user confirms to keep invalid.
+   e. If user chooses **"Sí"**: Mark as ⚠️ Invalid (user confirmed).
+6. After all 8 models are validated (or confirmed), show a summary table with each model and its status (✅ Valid / ⚠️ Invalid).
+7. If user chose "Save Configuration" in step 4 (Confirm question): call `orchestrator_save_config` with the collected fields.
+8. On "Save Configuration": print "Configuration saved." + applied summary with validation status.
+9. On "Cancel": print "Setup cancelled, no changes made." and stop.
 
 ---
 
@@ -216,6 +224,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Plan Primary",
   "question": "Select Planning Primary model",
+  "custom": true,
   "options": [
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for deep reasoning & architecture" },
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Top tier reasoning" },
@@ -234,6 +243,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Plan Fallback",
   "question": "Select Planning Fallback model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Top tier reasoning" },
     { "label": "deepseek/deepseek-reasoner (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Reasoner - Excellent reasoning model" },
@@ -252,6 +262,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Impl Primary",
   "question": "Select Implementation Primary model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Best for fast coding" },
     { "label": "nvidia/nemotron-70b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 70B - Excellent code generation" },
@@ -270,6 +281,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Impl Fallback",
   "question": "Select Implementation Fallback model",
+  "custom": true,
   "options": [
     { "label": "deepseek/deepseek-chat (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Chat - Top tier coding model" },
     { "label": "deepseek/deepseek-coder (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Coder - Specialized for coding" },
@@ -288,6 +300,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Review Primary",
   "question": "Select Review Primary model",
+  "custom": true,
   "options": [
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for code review & analysis" },
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Deep analysis capabilities" },
@@ -306,6 +319,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Review Fallback",
   "question": "Select Review Fallback model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Deep analysis capabilities" },
     { "label": "anthropic/claude-sonnet-4 (Anthropic) ⭐⭐⭐⭐⭐", "description": "Claude Sonnet 4 - Best-in-class code review" },
@@ -324,6 +338,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Rep Primary",
   "question": "Select Repetitive/Doc Primary model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Fastest for repetitive tasks" },
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Optimized for speed" },
@@ -342,6 +357,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Rep Fallback",
   "question": "Select Repetitive/Doc Fallback model",
+  "custom": true,
   "options": [
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Optimized for speed" },
     { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Fastest for repetitive tasks" },

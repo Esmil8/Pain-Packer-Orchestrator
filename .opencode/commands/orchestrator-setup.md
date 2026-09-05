@@ -4,10 +4,9 @@ agent: orchestrator
 ---
 Run the orchestrator setup wizard. Follow this exact flow:
 
-1. Call `orchestrator_get_state` and show the current config summary.
-2. Print the following reference block as markdown text:
-
-💡 **Available Models Reference:** Use these exact names if you select the 'Type your own answer' option below.
+1. Call `orchestrator_get_state` and get the current config.
+2. **CHECK**: Does saved config exist? (Compare state.config with DEFAULT_CONFIG - if different, config exists).
+3. Print the model reference block (always shown).
 
 ---
 
@@ -202,10 +201,77 @@ Run the orchestrator setup wizard. Follow this exact flow:
 - openai/gpt-4-turbo ⭐⭐⭐
 - openai/gpt-4 ⭐⭐⭐
 
-3. Call the `question` tool **ONCE** with an array containing ALL 13 questions below. The user will navigate between tabs and submit all answers at once.
-4. Process the single response object containing all answers, then call `orchestrator_save_config` with the collected fields.
-5. On "Save Configuration": print "Configuration saved." + applied summary.
-6. On "Cancel": print "Setup cancelled, no changes made." and stop.
+---
+
+## ⚡ CONDITIONAL SETUP FLOW
+
+### A. FIRST TIME SETUP (No saved config - state.config === DEFAULT_CONFIG)
+
+1. Call `orchestrator_get_model_list` for validation replacement flow.
+2. **PRINT THE MODEL REFERENCE BLOCK** (full list from lines 13-203 above).
+3. Call `question` tool **ONCE** with ALL 13 questions (8 model selectors + 5 config options).
+3. **VALIDATION LOOP** for each of the 8 selected models:
+   a. Call `orchestrator_validate_model` with the selected model.
+   b. If `ok: true` → mark as ✅ Valid.
+   c. If `ok: false` → show: `⚠️ El modelo '<model>' no está disponible. Error: <error>. ¿Quieres continuar con este modelo? (Sí/No)`
+   d. If user chooses **"No"**: Show replacement selector using `question` with `custom: true` and full model list (flattened from `orchestrator_get_model_list`, grouped by provider). Validate replacement. Repeat until valid or user confirms.
+   e. If user chooses **"Sí"**: Mark as ⚠️ Invalid (user confirmed).
+4. Show summary table with all 8 models and validation status.
+5. If Confirm = "Save Configuration": call `orchestrator_save_config`.
+6. Print "Configuration saved." + applied summary with validation status.
+
+### B. EXISTING CONFIG (state.config differs from DEFAULT_CONFIG)
+
+1. Show current config summary in a nice table format:
+   ```
+   ┌─────────────────┬──────────────────────────────────┬──────────────────────────────────┐
+   │ Role            │ Primary                          │ Fallback                         │
+   ├─────────────────┼──────────────────────────────────┼──────────────────────────────────┤
+   │ Planning        │ opencode/big-pickle              │ nvidia/nemotron-3-ultra-550b... │
+   │ Implementation  │ anthropic/claude-sonnet-4        │ opencode/big-pickle              │
+   │ Review          │ opencode/big-pickle              │ openai/gpt-4o                    │
+   │ Repetitive      │ deepseek/deepseek-chat           │ openai/gpt-4o-mini               │
+   └─────────────────┴──────────────────────────────────┴──────────────────────────────────┘
+   Workflow Toggles: ✅ confirm plan | ✅ auto-fix | ✅ run tests | ✅ auto-commit | ✅ show costs
+   Max Attempts: 3 | Timeout: 300s | Cost Threshold: $2.50
+   ```
+
+2. **PRINT THE MODEL REFERENCE BLOCK** (full list from lines 13-203 above - all providers with stars) so user sees all available models before choosing.
+
+3. Ask user what to modify using `question` tool:
+   ```json
+   {
+     "header": "Modify Section",
+     "question": "¿Qué sección quieres modificar?",
+     "options": [
+       { "label": "Planning Models", "description": "Change Plan Primary and Plan Fallback models" },
+       { "label": "Implementation Models", "description": "Change Impl Primary and Impl Fallback models" },
+       { "label": "Review Models", "description": "Change Review Primary and Review Fallback models" },
+       { "label": "Repetitive Models", "description": "Change Rep Primary and Rep Fallback models" },
+       { "label": "Workflow Toggles", "description": "Change workflow toggle settings" },
+       { "label": "Numeric Settings", "description": "Change max attempts, timeout, cost threshold" },
+       { "label": "All (Full Reconfigure)", "description": "Reconfigure everything from scratch" },
+       { "label": "Cancel", "description": "Exit without changes" }
+     ]
+   }
+   ```
+
+4. **PRINT THE MODEL REFERENCE BLOCK AGAIN** before showing section-specific questions (user needs to see options).
+
+5. Based on selection, show ONLY the relevant questions:
+   - **Planning Models** → Questions 1, 2 (Plan Primary, Plan Fallback)
+   - **Implementation Models** → Questions 3, 4 (Impl Primary, Impl Fallback)
+   - **Review Models** → Questions 5, 6 (Review Primary, Review Fallback)
+   - **Repetitive Models** → Questions 7, 8 (Rep Primary, Rep Fallback)
+   - **Workflow Toggles** → Question 9
+   - **Numeric Settings** → Questions 10, 11, 12
+   - **All** → All 13 questions
+
+4. For model changes: Run **VALIDATION LOOP** (same as first-time setup) for the modified models only.
+5. Show updated summary table with changes highlighted.
+6. Ask confirmation: `¿Guardar cambios? (Sí/No)`
+7. If "Sí": call `orchestrator_save_config` with merged config (unchanged values preserved).
+8. Print result.
 
 ---
 
@@ -216,6 +282,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Plan Primary",
   "question": "Select Planning Primary model",
+  "custom": true,
   "options": [
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for deep reasoning & architecture" },
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Top tier reasoning" },
@@ -234,6 +301,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Plan Fallback",
   "question": "Select Planning Fallback model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Top tier reasoning" },
     { "label": "deepseek/deepseek-reasoner (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Reasoner - Excellent reasoning model" },
@@ -252,6 +320,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Impl Primary",
   "question": "Select Implementation Primary model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Best for fast coding" },
     { "label": "nvidia/nemotron-70b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 70B - Excellent code generation" },
@@ -270,6 +339,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Impl Fallback",
   "question": "Select Implementation Fallback model",
+  "custom": true,
   "options": [
     { "label": "deepseek/deepseek-chat (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Chat - Top tier coding model" },
     { "label": "deepseek/deepseek-coder (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Coder - Specialized for coding" },
@@ -288,6 +358,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Review Primary",
   "question": "Select Review Primary model",
+  "custom": true,
   "options": [
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for code review & analysis" },
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Deep analysis capabilities" },
@@ -306,6 +377,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Review Fallback",
   "question": "Select Review Fallback model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Deep analysis capabilities" },
     { "label": "anthropic/claude-sonnet-4 (Anthropic) ⭐⭐⭐⭐⭐", "description": "Claude Sonnet 4 - Best-in-class code review" },
@@ -324,6 +396,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Rep Primary",
   "question": "Select Repetitive/Doc Primary model",
+  "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Fastest for repetitive tasks" },
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Optimized for speed" },
@@ -342,6 +415,7 @@ The single `question` call must contain these 13 items in its `questions` array.
 {
   "header": "Rep Fallback",
   "question": "Select Repetitive/Doc Fallback model",
+  "custom": true,
   "options": [
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Optimized for speed" },
     { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Fastest for repetitive tasks" },

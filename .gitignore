@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+
+# Build output
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Testing
+coverage/
+
+# OpenCode local state (optional to track)
+.opencode/state/plugin-orchestrator.json
+
+# AI docs (generated)
+docs/ai-docs/*.md
+!docs/ai-docs/.gitkeep

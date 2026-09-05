@@ -236,7 +236,7 @@ Run the orchestrator setup wizard. Follow this exact flow:
    Max Attempts: 3 | Timeout: 300s | Cost Threshold: $2.50
    ```
 
-2. **PRINT THE MODEL REFERENCE BLOCK AGAIN** (full list from lines 13-203 above) so user can see all options.
+2. **PRINT THE MODEL REFERENCE BLOCK** (full list from lines 13-203 above - all providers with stars) so user sees all available models before choosing.
 
 3. Ask user what to modify using `question` tool:
    ```json

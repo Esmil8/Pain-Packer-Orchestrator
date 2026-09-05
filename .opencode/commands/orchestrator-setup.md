@@ -208,7 +208,8 @@ Run the orchestrator setup wizard. Follow this exact flow:
 ### A. FIRST TIME SETUP (No saved config - state.config === DEFAULT_CONFIG)
 
 1. Call `orchestrator_get_model_list` for validation replacement flow.
-2. Call `question` tool **ONCE** with ALL 13 questions (8 model selectors + 5 config options).
+2. **PRINT THE MODEL REFERENCE BLOCK** (full list from lines 13-203 above).
+3. Call `question` tool **ONCE** with ALL 13 questions (8 model selectors + 5 config options).
 3. **VALIDATION LOOP** for each of the 8 selected models:
    a. Call `orchestrator_validate_model` with the selected model.
    b. If `ok: true` → mark as ✅ Valid.
@@ -235,7 +236,9 @@ Run the orchestrator setup wizard. Follow this exact flow:
    Max Attempts: 3 | Timeout: 300s | Cost Threshold: $2.50
    ```
 
-2. Ask user what to modify using `question` tool:
+2. **PRINT THE MODEL REFERENCE BLOCK AGAIN** (full list from lines 13-203 above) so user can see all options.
+
+3. Ask user what to modify using `question` tool:
    ```json
    {
      "header": "Modify Section",
@@ -253,7 +256,9 @@ Run the orchestrator setup wizard. Follow this exact flow:
    }
    ```
 
-3. Based on selection, show ONLY the relevant questions:
+4. **PRINT THE MODEL REFERENCE BLOCK AGAIN** before showing section-specific questions (user needs to see options).
+
+5. Based on selection, show ONLY the relevant questions:
    - **Planning Models** → Questions 1, 2 (Plan Primary, Plan Fallback)
    - **Implementation Models** → Questions 3, 4 (Impl Primary, Impl Fallback)
    - **Review Models** → Questions 5, 6 (Review Primary, Review Fallback)

@@ -21,19 +21,43 @@ You also handle the `/orchestrator setup` command for configuration with model v
 ## Setup Command Flow (when user runs `/orchestrator setup`)
 
 Follow the flow defined in `.opencode/commands/orchestrator-setup.md`:
-1. Call `orchestrator_get_state` and show current config summary.
-2. Print the model reference block.
-3. Call `orchestrator_get_model_list` for the full model list.
-4. Call `question` tool ONCE with all 13 questions (8 model selectors + 5 config options).
-5. **VALIDATION LOOP** for each of the 8 selected models:
+
+1. Call `orchestrator_get_state` and get current config.
+2. **Check if config exists**: Compare `state.config` with `DEFAULT_CONFIG` (from plugin). If they differ → config exists.
+3. Print the model reference block.
+
+### A. FIRST TIME SETUP (No saved config)
+
+4. Call `orchestrator_get_model_list` for full model list.
+5. Call `question` tool ONCE with all 13 questions (8 model selectors + 5 config options).
+6. **VALIDATION LOOP** for each of the 8 selected models:
    a. Call `orchestrator_validate_model` with the model.
    b. If valid (ok: true) → mark ✅ Valid.
    c. If invalid → ask: `⚠️ El modelo '<model>' no está disponible. Error: <error>. ¿Quieres continuar con este modelo? (Sí/No)`
-   d. If "No": Show replacement selector using `question` with `custom: true` and full model list (flattened from `orchestrator_get_model_list`). Validate replacement. Repeat until valid or user confirms.
+   d. If "No": Show replacement selector using `question` with `custom: true` and full model list (flattened from `orchestrator_get_model_list`, grouped by provider). Validate replacement. Repeat until valid or user confirms.
    e. If "Sí": Mark ⚠️ Invalid (user confirmed).
-6. Show summary table with all 8 models and validation status.
-7. If Confirm = "Save Configuration": call `orchestrator_save_config`.
-8. Print result.
+7. Show summary table with all 8 models and validation status.
+8. If Confirm = "Save Configuration": call `orchestrator_save_config`.
+9. Print result.
+
+### B. EXISTING CONFIG
+
+4. Show current config summary in a formatted table (see command file for format).
+5. Ask user what to modify using `question` tool with options:
+   - Planning Models (Questions 1,2)
+   - Implementation Models (Questions 3,4)
+   - Review Models (Questions 5,6)
+   - Repetitive Models (Questions 7,8)
+   - Workflow Toggles (Question 9)
+   - Numeric Settings (Questions 10,11,12)
+   - All (Full Reconfigure - all 13 questions)
+   - Cancel
+6. Based on selection, call `question` with ONLY the relevant questions (use the exact same option arrays from the command file).
+7. For model changes: Run VALIDATION LOOP for modified models only.
+8. Show updated summary with changes highlighted.
+9. Ask: `¿Guardar cambios? (Sí/No)`
+10. If "Sí": call `orchestrator_save_config` with merged config (preserve unchanged values from state.config).
+11. Print result.
 
 ## Main Workflow (Task Execution)
 

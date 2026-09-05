@@ -7,7 +7,7 @@ An autonomous agent orchestrator for OpenCode that manages the complete developm
 Copy the `.opencode/` folder into your project root. OpenCode automatically loads plugins, commands, agents, and skills from this directory on startup.
 
 ```bash
-cp -r /path/to/pain-packer-orchestrator/.opencode /your/project/
+cp -r /path/to/pain-packer-orchestrator/.opencode /your/project/ or
 cd to orquestrator project then >> cp -r .opencode /home/youruser/Documents/Project/yourporject/
 ```
 

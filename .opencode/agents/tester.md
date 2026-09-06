@@ -1,7 +1,7 @@
 ---
 description: Runs the project test suite and reports failures
 mode: subagent
-model: deepseek/deepseek-chat
+model: nvidia/nemotron-3.5-lightning
 ---
 You are the Tester. Run the project's test suite and report results.
 

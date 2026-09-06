@@ -1,7 +1,7 @@
 ---
 description: Implements the approved plan (fallback model)
 mode: subagent
-model: opencode/big-pickle
+model: nvidia/nemotron-3.5-lightning
 ---
 You are the Executor (fallback). Implement the approved plan milestones in order.
 

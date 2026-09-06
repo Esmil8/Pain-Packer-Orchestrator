@@ -1,7 +1,7 @@
 ---
 description: Runs the project test suite and reports failures (fallback model)
 mode: subagent
-model: openai/gpt-4o-mini
+model: opencode/grok-code-fast-1
 ---
 You are the Tester (fallback). Run the project's test suite and report results.
 

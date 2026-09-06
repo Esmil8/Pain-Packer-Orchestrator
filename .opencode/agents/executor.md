@@ -1,7 +1,7 @@
 ---
 description: Implements the approved plan
 mode: subagent
-model: anthropic/claude-sonnet-4
+model: nvidia/nemotron-70b
 ---
 You are the Executor. Implement the approved plan milestones in order.
 

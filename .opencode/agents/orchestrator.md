@@ -68,8 +68,10 @@ Follow the flow defined in `.opencode/commands/orchestrator-setup.md`:
 2. **Create progress checklist**: Use `todowrite` to create a live checklist with one item per phase.
 3. **Phase PLAN**:
    - Call `orchestrator_start_task` with the task description and a slug.
+   - **Read current config** via `orchestrator_get_state` to get the planning primary model.
+   - **Log**: `📋 Phase PLAN: delegating to planner (model: <planning-primary-model>)`
    - Delegate to the `planner` subagent via the `task` tool. Pass the task description.
-   - On failure or timeout: retry once with `planner-fallback`. Record milestone via `orchestrator_record_milestone` after each attempt.
+   - On failure or timeout: retry once with `planner-fallback`. **Log**: `⚠️ Phase PLAN: primary model failed, falling back to planner-fallback (model: <planning-fallback-model>)`. Record milestone via `orchestrator_record_milestone` after each attempt.
    - If both fail, mark task FAILED and stop.
 4. **Phase PLAN_REVIEW** (if config.confirmPlanBeforeImplementation):
    - Read the generated plan file.
@@ -78,16 +80,24 @@ Follow the flow defined in `.opencode/commands/orchestrator-setup.md`:
    - `Modify` (or custom answer with instructions) → send feedback back to `planner` and re-plan (loop back to Phase PLAN).
    - `Cancel` → record milestone with status `canceled`, stop.
 5. **Phase IMPLEMENT**:
+   - **Read current config** to get the implementation primary model.
+   - **Log**: `⚡ Phase IMPLEMENT: delegating to executor (model: <implementation-primary-model>)`
    - Delegate to `executor` subagent with the plan path.
-   - On failure: retry with `executor-fallback`. Record milestones.
+   - On failure: retry with `executor-fallback`. **Log**: `⚠️ Phase IMPLEMENT: primary model failed, falling back to executor-fallback (model: <implementation-fallback-model>)`. Record milestones.
    - If `config.autoFixIssues` and reviewer finds issues: loop IMPLEMENT → REVIEW up to `config.maxAttemptsPerPhase`.
 6. **Phase REVIEW**:
+   - **Read current config** to get the review primary model.
+   - **Log**: `🔍 Phase REVIEW: delegating to reviewer (model: <review-primary-model>)`
    - Delegate to `reviewer` subagent with the plan path and implementation summary.
-   - On failure: retry with `reviewer-fallback`. Record milestones.
+   - On failure: retry with `reviewer-fallback`. **Log**: `⚠️ Phase REVIEW: primary model failed, falling back to reviewer-fallback (model: <review-fallback-model>)`. Record milestones.
 7. **Phase TEST** (if config.runTestsAfterImplementation):
+   - **Read current config** to get the repetitive primary model.
+   - **Log**: `🧪 Phase TEST: delegating to tester (model: <repetitive-primary-model>)`
    - Delegate to `tester` subagent.
-   - On failure: retry with `tester-fallback`. Record milestones.
+   - On failure: retry with `tester-fallback`. **Log**: `⚠️ Phase TEST: primary model failed, falling back to tester-fallback (model: <repetitive-fallback-model>)`. Record milestones.
 8. **Phase COMMIT** (if config.autoCommit):
+   - **Read current config** to get the repetitive primary model (deployer uses same role).
+   - **Log**: `🚀 Phase COMMIT: delegating to deployer (model: <repetitive-primary-model>)`
    - Delegate to `deployer` subagent. It will create branch, commit (Conventional Commits, English), push, and optionally open PR.
    - If `config.autoCommit` is false: print the prepared commit message and let the user decide.
 9. **Phase DOCS**:
@@ -101,7 +111,7 @@ Follow the flow defined in `.opencode/commands/orchestrator-setup.md`:
 
 ## Fallback During Execution
 
-If a primary model fails during any phase (detected via error in milestone or subagent failure), automatically retry with the configured fallback model for that role. Record the fallback event in milestones with status `fallback`.
+If a primary model fails during any phase (detected via error in milestone or subagent failure), automatically retry with the configured fallback model for that role. **Log the fallback event clearly**: `⚠️ Phase <PHASE>: primary model <primary-model> failed (error: <error>). Falling back to <fallback-model>.` Record the fallback event in milestones with status `fallback`.
 
 ## Delegation Rules
 

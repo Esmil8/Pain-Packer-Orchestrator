@@ -151,8 +151,14 @@ function syncAgentModels(config: any): void {
   };
   for (const [role, files] of Object.entries(roleAgents)) {
     const roleConfig = config[role] || DEFAULT_CONFIG[role];
-    for (const name of files.primary) setAgentModel(name, roleConfig.primary);
-    for (const name of files.fallback) setAgentModel(name, roleConfig.fallback);
+    for (const name of files.primary) {
+      setAgentModel(name, roleConfig.primary);
+      console.log(`[orchestrator] Applied primary model "${roleConfig.primary}" to agent ${name}.md`);
+    }
+    for (const name of files.fallback) {
+      setAgentModel(name, roleConfig.fallback);
+      console.log(`[orchestrator] Applied fallback model "${roleConfig.fallback}" to agent ${name}.md`);
+    }
   }
 }
 
@@ -319,9 +325,25 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
             timeoutPerPhaseSeconds: Math.min(3600, Math.max(30, args.timeoutPerPhaseSeconds)),
             costThresholdForConfirmationUsd: Math.max(0, args.costThresholdForConfirmationUsd),
           };
-          state.config = { ...clamped, ui: { language: "en" } };
+          const nestedConfig = {
+            planning: { primary: clamped.planningPrimary, fallback: clamped.planningFallback },
+            implementation: { primary: clamped.implementationPrimary, fallback: clamped.implementationFallback },
+            review: { primary: clamped.reviewPrimary, fallback: clamped.reviewFallback },
+            repetitive: { primary: clamped.repetitivePrimary, fallback: clamped.repetitiveFallback },
+            confirmPlanBeforeImplementation: clamped.confirmPlanBeforeImplementation,
+            autoFixIssues: clamped.autoFixIssues,
+            runTestsAfterImplementation: clamped.runTestsAfterImplementation,
+            autoCommit: clamped.autoCommit,
+            showCostEstimates: clamped.showCostEstimates,
+            maxAttemptsPerPhase: clamped.maxAttemptsPerPhase,
+            timeoutPerPhaseSeconds: clamped.timeoutPerPhaseSeconds,
+            costThresholdForConfirmationUsd: clamped.costThresholdForConfirmationUsd,
+            ui: { language: "en" },
+          };
+          state.config = nestedConfig;
           await syncAgentModels(state.config);
           writeState(state);
+          client.app.log({ body: { service: "orchestrator", level: "info", message: "Configuration saved and synced to agents", extra: { config: nestedConfig } } });
           return JSON.stringify(state.config);
         },
       }),

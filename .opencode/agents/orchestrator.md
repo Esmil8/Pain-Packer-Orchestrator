@@ -24,12 +24,12 @@ Follow the flow defined in `.opencode/commands/orchestrator-setup.md`:
 
 1. Call `orchestrator_get_state` and get current config.
 2. **Check if config exists**: Compare `state.config` with `DEFAULT_CONFIG` (from plugin). If they differ → config exists.
-3. **PRINT THE MODEL REFERENCE BLOCK** (always shown - full model list from command file).
+3. **PRINT THE MODEL REFERENCE BLOCK** (always shown - full model list from command file). **Output the entire model reference block from `.opencode/commands/orchestrator-setup.md` (lines 13-203) to the user now.**
 
 ### A. FIRST TIME SETUP (No saved config)
 
 4. Call `orchestrator_get_model_list` for full model list.
-5. **PRINT THE MODEL REFERENCE BLOCK AGAIN** before questions.
+5. **PRINT THE MODEL REFERENCE BLOCK AGAIN** before questions. **Output the model reference block again.**
 6. Call `question` tool ONCE with all 13 questions (8 model selectors + 5 config options).
 7. **VALIDATION LOOP** for each of the 8 selected models:
    a. Call `orchestrator_validate_model` with the model.
@@ -44,7 +44,7 @@ Follow the flow defined in `.opencode/commands/orchestrator-setup.md`:
 ### B. EXISTING CONFIG
 
 4. Show current config summary in a formatted table (see command file for format).
-5. **PRINT THE MODEL REFERENCE BLOCK AGAIN** (full model list).
+5. **PRINT THE MODEL REFERENCE BLOCK AGAIN** (full model list). **Output the model reference block.**
 6. Ask user what to modify using `question` tool with options:
    - Planning Models (Questions 1,2)
    - Implementation Models (Questions 3,4)
@@ -54,7 +54,7 @@ Follow the flow defined in `.opencode/commands/orchestrator-setup.md`:
    - Numeric Settings (Questions 10,11,12)
    - All (Full Reconfigure - all 13 questions)
    - Cancel
-7. **PRINT THE MODEL REFERENCE BLOCK AGAIN** before showing section-specific questions.
+7. **PRINT THE MODEL REFERENCE BLOCK AGAIN** before showing section-specific questions. **Output the model reference block.**
 8. Based on selection, call `question` with ONLY the relevant questions (use the exact same option arrays from the command file).
 9. For model changes: Run VALIDATION LOOP for modified models only.
 10. Show updated summary with changes highlighted.
@@ -125,3 +125,202 @@ If a primary model fails during any phase (detected via error in milestone or su
 - Progress via `todowrite` checklist (live in UI).
 - Final summary with cost estimate if enabled.
 - Errors are reported but never silently swallowed.
+
+## Model Reference Block (for setup command)
+
+When instructed to "PRINT THE MODEL REFERENCE BLOCK", output this exact content:
+
+---
+
+## 📋 PLANNING Models (Deep Reasoning, Architecture, Strategy)
+
+### ⭐⭐⭐⭐⭐ Top Tier (Best for complex planning)
+- **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-reasoner** (OpenRouter) — *Free tier available*
+- **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
+- **openai/o1-preview** (OpenAI) — *Paid*
+
+### ⭐⭐⭐⭐ Excellent
+- **z-ai/glm-4.5** (OpenRouter) — *Free tier available*
+- **google/gemini-2.5-pro** (Google) — *Free tier available*
+- **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
+- **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
+- **mistral/mistral-large** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra** (OpenRouter) — *Free tier available*
+- **x-ai/grok-2** (OpenRouter) — *Free tier available*
+- **cohere/command-r-plus** (OpenRouter) — *Free tier available*
+- **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
+
+### ⭐⭐⭐ Good
+- **openai/gpt-4o** (OpenAI) — *Paid*
+- **anthropic/claude-3-opus-20240229** (Anthropic) — *Paid*
+
+---
+
+## 💻 IMPLEMENTATION Models (Coding, Code Generation, Refactoring)
+
+### ⭐⭐⭐⭐⭐ Top Tier (Best for coding)
+- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-70b** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-coder** (OpenRouter) — *Free tier available*
+- **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
+
+### ⭐⭐⭐⭐ Excellent
+- **opencode/opencode-coder** (OpenCode Zen) — *Free, built-in*
+- **qwen/qwen-2.5-coder-32b** (OpenRouter) — *Free tier available*
+- **qwen/qwen-3.7-flash** (OpenRouter) — *Free tier available*
+- **mistral/codestral** (OpenRouter) — *Free tier available*
+- **meta-llama/llama-3.1-70b** (OpenRouter) — *Free tier available*
+- **google/gemini-2.5-flash** (Google) — *Free tier available*
+- **opencode/quasar-alpha** (OpenCode Zen) — *Free, built-in*
+- **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
+
+### ⭐⭐⭐ Good
+- **openai/gpt-4o-mini** (OpenAI) — *Paid, cheap*
+- **meta-llama/llama-3.1-8b** (OpenRouter) — *Free tier available*
+- **openai/gpt-4o** (OpenAI) — *Paid*
+
+---
+
+## 🔍 REVIEW Models (Code Analysis, Security, Quality, Architecture Review)
+
+### ⭐⭐⭐⭐⭐ Top Tier
+- **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
+
+### ⭐⭐⭐⭐ Excellent
+- **deepseek/deepseek-reasoner** (OpenRouter) — *Free tier available*
+- **z-ai/glm-4.5** (OpenRouter) — *Free tier available*
+- **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
+- **google/gemini-2.5-pro** (Google) — *Free tier available*
+- **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
+- **mistral/mistral-large** (OpenRouter) — *Free tier available*
+- **openai/gpt-4o** (OpenAI) — *Paid*
+- **nvidia/nemotron-3-ultra** (OpenRouter) — *Free tier available*
+- **x-ai/grok-2** (OpenRouter) — *Free tier available*
+- **cohere/command-r-plus** (OpenRouter) — *Free tier available*
+
+### ⭐⭐⭐ Good
+- **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
+
+---
+
+## ⚡ REPETITIVE TASKS Models (DTOs, Tests, CRUD, Boilerplate, Docs)
+
+### ⭐⭐⭐⭐⭐ Top Tier (Fastest & Cheapest)
+- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
+- **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
+
+### ⭐⭐⭐⭐ Excellent
+- **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-coder** (OpenRouter) — *Free tier available*
+- **qwen/qwen-3.7-flash** (Qwen) — *Free tier available*
+- **mistral/mistral-nemo** (Mistral) — *Free tier available*
+- **google/gemini-2.5-flash** (Google) — *Free tier available*
+- **opencode/quasar-alpha** (OpenCode Zen) — *Free, built-in*
+- **qwen/qwen-2.5-coder-32b** (OpenRouter) — *Free tier available*
+
+### ⭐⭐⭐ Good (Cost-effective)
+- **openai/gpt-4o-mini** (OpenAI) — *Paid, very cheap*
+- **opencode/zen-coder** (OpenCode Zen) — *Free, built-in*
+- **meta-llama/llama-3.1-8b** (OpenRouter) — *Free tier available*
+- **meta-llama/llama-3.2-11b** (OpenRouter) — *Free tier available*
+- **anthropic/claude-3-5-haiku-20241022** (Anthropic) — *Paid, cheap*
+- **z-ai/glm-4.5-air** (OpenRouter) — *Free tier available*
+
+---
+
+## 🎯 FALLBACK Models (Universal fallbacks for any category)
+
+### ⭐⭐⭐⭐⭐ Best Universal Fallbacks
+- **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
+- **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **google/gemini-2.5-flash** (Google) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
+- **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
+
+### ⭐⭐⭐⭐ Good Universal Fallbacks
+- **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
+- **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
+- **meta-llama/llama-3.1-70b** (OpenRouter) — *Free tier available*
+- **openai/gpt-4o-mini** (OpenAI) — *Paid, cheap*
+
+---
+
+## 🏷️ By Provider (Quick Reference)
+
+**OpenCode (Built-in, ALL FREE):**
+- opencode/big-pickle ⭐⭐⭐⭐⭐
+- opencode/grok-code-fast-1 ⭐⭐⭐⭐⭐
+- opencode/quasar-alpha ⭐⭐⭐⭐
+- opencode/opencode-coder ⭐⭐⭐⭐
+- opencode/zen-coder ⭐⭐⭐
+- opencode/j1-mini-lg ⭐⭐⭐
+
+**NVIDIA (OpenRouter, Free tier):**
+- nvidia/nemotron-3.5-lightning ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-ultra-550b-a55b ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-ultra ⭐⭐⭐⭐
+- nvidia/nemotron-70b ⭐⭐⭐⭐⭐
+
+**DeepSeek (OpenRouter, Free tier):**
+- deepseek/deepseek-reasoner ⭐⭐⭐⭐⭐
+- deepseek/deepseek-chat ⭐⭐⭐⭐⭐
+- deepseek/deepseek-coder ⭐⭐⭐⭐⭐
+
+**Qwen (OpenRouter, Free tier):**
+- qwen/qwen-2.5-72b ⭐⭐⭐⭐
+- qwen/qwen-2.5-coder-32b ⭐⭐⭐⭐
+- qwen/qwen-3.7-flash ⭐⭐⭐⭐
+- qwen/qwq-32b ⭐⭐⭐⭐
+
+**Google (Free tier):**
+- google/gemini-2.5-flash ⭐⭐⭐⭐
+- google/gemini-2.5-pro ⭐⭐⭐⭐
+- google/gemini-1.5-flash ⭐⭐⭐
+- google/gemini-1.5-pro ⭐⭐⭐
+
+**Meta/Llama (OpenRouter, Free tier):**
+- meta-llama/llama-3.1-405b ⭐⭐⭐⭐
+- meta-llama/llama-3.1-70b ⭐⭐⭐⭐
+- meta-llama/llama-3.1-8b ⭐⭐⭐
+- meta-llama/llama-3.2-90b ⭐⭐⭐
+- meta-llama/llama-3.2-11b ⭐⭐⭐
+
+**Mistral (OpenRouter, Free tier):**
+- mistral/mistral-large ⭐⭐⭐⭐
+- mistral/mistral-nemo ⭐⭐⭐⭐
+- mistral/codestral ⭐⭐⭐⭐
+
+**Z.ai/GLM (OpenRouter, Free tier):**
+- z-ai/glm-4.5 ⭐⭐⭐⭐
+- z-ai/glm-4.5-air ⭐⭐⭐
+
+**xAI (OpenRouter, Free tier):**
+- x-ai/grok-2 ⭐⭐⭐⭐
+- x-ai/grok-2-mini ⭐⭐⭐
+
+**Cohere (OpenRouter, Free tier):**
+- cohere/command-r-plus ⭐⭐⭐⭐
+- cohere/command-r ⭐⭐⭐
+
+**Anthropic (Paid):**
+- anthropic/claude-sonnet-4 ⭐⭐⭐⭐⭐
+- anthropic/claude-3-5-sonnet-20241022 ⭐⭐⭐⭐
+- anthropic/claude-haiku-4-5 ⭐⭐⭐
+- anthropic/claude-3-5-haiku-20241022 ⭐⭐⭐
+- anthropic/claude-3-opus-20240229 ⭐⭐⭐
+
+**OpenAI (Paid):**
+- openai/gpt-4o ⭐⭐⭐⭐
+- openai/gpt-4o-mini ⭐⭐⭐
+- openai/o1-preview ⭐⭐⭐⭐
+- openai/o1-mini ⭐⭐⭐
+- openai/gpt-4-turbo ⭐⭐⭐
+- openai/gpt-4 ⭐⭐⭐
+
+---

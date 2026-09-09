@@ -4,7 +4,7 @@ agent: orchestrator
 ---
 # Orchestrator Setup Wizard
 
-Execute this setup wizard step by step. Each step uses the `question` tool to show interactive UI.
+Execute this setup wizard step by step.
 
 ---
 
@@ -33,7 +33,237 @@ Max Attempts: {maxAttemptsPerPhase} | Timeout: {timeoutPerPhaseSeconds}s | Cost 
 
 ---
 
-## Step 3: Call `question` tool to collect ALL settings
+## Step 3: Print the FULL Model Reference Block
+
+**ALWAYS print this block BEFORE calling the question tool.** The user needs to see all available models with their star ratings so they can use "Type your own answer" to enter any `provider/model` ID from this list.
+
+Output this EXACT content to the user:
+
+---
+
+## 📋 PLANNING Models (Deep Reasoning, Architecture, Strategy)
+
+### ⭐⭐⭐⭐⭐ Top Tier (Best for complex planning)
+- **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **opencode/nemotron-3-ultra-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-120b-a12b** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-reasoner** (OpenRouter) — *Free tier available*
+- **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
+- **openai/o1-preview** (OpenAI) — *Paid*
+
+### ⭐⭐⭐⭐ Excellent
+- **z-ai/glm-4.5** (OpenRouter) — *Free tier available*
+- **google/gemini-2.5-pro** (Google) — *Free tier available*
+- **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
+- **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
+- **mistral/mistral-large** (OpenRouter) — *Free tier available*
+- **x-ai/grok-2** (OpenRouter) — *Free tier available*
+- **cohere/command-r-plus** (OpenRouter) — *Free tier available*
+- **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
+
+### ⭐⭐⭐ Good
+- **openai/gpt-4o** (OpenAI) — *Paid*
+- **anthropic/claude-3-opus-20240229** (Anthropic) — *Paid*
+
+---
+
+## 💻 IMPLEMENTATION Models (Coding, Code Generation, Refactoring)
+
+### ⭐⭐⭐⭐⭐ Top Tier (Best for coding)
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-omni-free** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-coder** (OpenRouter) — *Free tier available*
+- **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
+
+### ⭐⭐⭐⭐ Excellent
+- **opencode/opencode-coder** (OpenCode Zen) — *Free, built-in*
+- **qwen/qwen-2.5-coder-32b** (OpenRouter) — *Free tier available*
+- **qwen/qwen-3.7-flash** (OpenRouter) — *Free tier available*
+- **mistral/codestral** (OpenRouter) — *Free tier available*
+- **meta-llama/llama-3.1-70b** (OpenRouter) — *Free tier available*
+- **google/gemini-2.5-flash** (Google) — *Free tier available*
+- **opencode/quasar-alpha** (OpenCode Zen) — *Free, built-in*
+- **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
+
+### ⭐⭐⭐ Good
+- **openai/gpt-4o-mini** (OpenAI) — *Paid, cheap*
+- **meta-llama/llama-3.1-8b** (OpenRouter) — *Free tier available*
+- **openai/gpt-4o** (OpenAI) — *Paid*
+
+---
+
+## 🔍 REVIEW Models (Code Analysis, Security, Quality, Architecture Review)
+
+### ⭐⭐⭐⭐⭐ Top Tier
+- **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **opencode/nemotron-3-ultra-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-120b-a12b** (OpenRouter) — *Free tier available*
+- **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
+
+### ⭐⭐⭐⭐ Excellent
+- **deepseek/deepseek-reasoner** (OpenRouter) — *Free tier available*
+- **z-ai/glm-4.5** (OpenRouter) — *Free tier available*
+- **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
+- **google/gemini-2.5-pro** (Google) — *Free tier available*
+- **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
+- **mistral/mistral-large** (OpenRouter) — *Free tier available*
+- **openai/gpt-4o** (OpenAI) — *Paid*
+- **x-ai/grok-2** (OpenRouter) — *Free tier available*
+- **cohere/command-r-plus** (OpenRouter) — *Free tier available*
+
+### ⭐⭐⭐ Good
+- **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
+
+---
+
+## ⚡ REPETITIVE TASKS Models (DTOs, Tests, CRUD, Boilerplate, Docs)
+
+### ⭐⭐⭐⭐⭐ Top Tier (Fastest & Cheapest)
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-omni-free** (OpenRouter) — *Free tier available*
+- **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
+
+### ⭐⭐⭐⭐ Excellent
+- **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-coder** (OpenRouter) — *Free tier available*
+- **qwen/qwen-3.7-flash** (OpenRouter) — *Free tier available*
+- **mistral/mistral-nemo** (OpenRouter) — *Free tier available*
+- **google/gemini-2.5-flash** (Google) — *Free tier available*
+- **opencode/quasar-alpha** (OpenCode Zen) — *Free, built-in*
+- **qwen/qwen-2.5-coder-32b** (OpenRouter) — *Free tier available*
+
+### ⭐⭐⭐ Good (Cost-effective)
+- **openai/gpt-4o-mini** (OpenAI) — *Paid, very cheap*
+- **opencode/zen-coder** (OpenCode Zen) — *Free, built-in*
+- **meta-llama/llama-3.1-8b** (OpenRouter) — *Free tier available*
+- **meta-llama/llama-3.2-11b** (OpenRouter) — *Free tier available*
+- **anthropic/claude-3-5-haiku-20241022** (Anthropic) — *Paid, cheap*
+- **z-ai/glm-4.5-air** (OpenRouter) — *Free tier available*
+
+---
+
+## 🎯 FALLBACK Models (Universal fallbacks for any category)
+
+### ⭐⭐⭐⭐⭐ Best Universal Fallbacks
+- **opencode/nemotron-3-ultra-free** (OpenCode Zen) — *Free, built-in*
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
+- **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
+- **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **google/gemini-2.5-flash** (Google) — *Free tier available*
+- **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
+
+### ⭐⭐⭐⭐ Good Universal Fallbacks
+- **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
+- **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
+- **meta-llama/llama-3.1-70b** (OpenRouter) — *Free tier available*
+- **openai/gpt-4o-mini** (OpenAI) — *Paid, cheap*
+
+---
+
+## 🏷️ By Provider (Quick Reference)
+
+**OpenCode (Built-in, ALL FREE):**
+- opencode/big-pickle ⭐⭐⭐⭐⭐
+- opencode/grok-code-fast-1 ⭐⭐⭐⭐⭐
+- opencode/quasar-alpha ⭐⭐⭐⭐
+- opencode/opencode-coder ⭐⭐⭐⭐
+- opencode/zen-coder ⭐⭐⭐
+- opencode/j1-mini-lg ⭐⭐⭐
+- opencode/nemotron-3-ultra-free ⭐⭐⭐⭐⭐
+- opencode/nemotron-3.5-lightning-free ⭐⭐⭐⭐⭐
+
+**NVIDIA (OpenRouter, Free tier):**
+- nvidia/nemotron-3.5-lightning-free ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3.5-lightning-30b-a3b ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-ultra-free ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-ultra-550b-a55b ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-super-free ⭐⭐⭐⭐
+- nvidia/nemotron-3-super-120b-a12b ⭐⭐⭐⭐
+- nvidia/nemotron-3-nano-30b-a3b ⭐⭐⭐⭐
+- nvidia/nemotron-3.5-content-safety ⭐⭐⭐
+- nvidia/nemotron-3.5-content-safety-free ⭐⭐⭐
+- nvidia/nemotron-3-nano-omni-free ⭐⭐⭐
+
+**DeepSeek (OpenRouter, Free tier):**
+- deepseek/deepseek-reasoner ⭐⭐⭐⭐⭐
+- deepseek/deepseek-chat ⭐⭐⭐⭐⭐
+- deepseek/deepseek-coder ⭐⭐⭐⭐⭐
+
+**Qwen (OpenRouter, Free tier):**
+- qwen/qwen-2.5-72b ⭐⭐⭐⭐
+- qwen/qwen-2.5-coder-32b ⭐⭐⭐⭐
+- qwen/qwen-3.7-flash ⭐⭐⭐⭐
+- qwen/qwq-32b ⭐⭐⭐⭐
+
+**Google (Free tier):**
+- google/gemini-2.5-flash ⭐⭐⭐⭐
+- google/gemini-2.5-pro ⭐⭐⭐⭐
+- google/gemini-1.5-flash ⭐⭐⭐
+- google/gemini-1.5-pro ⭐⭐⭐
+
+**Meta/Llama (OpenRouter, Free tier):**
+- meta-llama/llama-3.1-405b ⭐⭐⭐⭐
+- meta-llama/llama-3.1-70b ⭐⭐⭐⭐
+- meta-llama/llama-3.1-8b ⭐⭐⭐
+- meta-llama/llama-3.2-90b ⭐⭐⭐
+- meta-llama/llama-3.2-11b ⭐⭐⭐
+
+**Mistral (OpenRouter, Free tier):**
+- mistral/mistral-large ⭐⭐⭐⭐
+- mistral/mistral-nemo ⭐⭐⭐⭐
+- mistral/codestral ⭐⭐⭐⭐
+
+**Z.ai/GLM (OpenRouter, Free tier):**
+- z-ai/glm-4.5 ⭐⭐⭐⭐
+- z-ai/glm-4.5-air ⭐⭐⭐
+
+**xAI (OpenRouter, Free tier):**
+- x-ai/grok-2 ⭐⭐⭐⭐
+- x-ai/grok-2-mini ⭐⭐⭐
+
+**Cohere (OpenRouter, Free tier):**
+- cohere/command-r-plus ⭐⭐⭐⭐
+- cohere/command-r ⭐⭐⭐
+
+**Anthropic (Paid):**
+- anthropic/claude-sonnet-4 ⭐⭐⭐⭐⭐
+- anthropic/claude-3-5-sonnet-20241022 ⭐⭐⭐⭐
+- anthropic/claude-haiku-4-5 ⭐⭐⭐
+- anthropic/claude-3-5-haiku-20241022 ⭐⭐⭐
+- anthropic/claude-3-opus-20240229 ⭐⭐⭐
+
+**OpenAI (Paid):**
+- openai/gpt-4o ⭐⭐⭐⭐
+- openai/gpt-4o-mini ⭐⭐⭐
+- openai/o1-preview ⭐⭐⭐⭐
+- openai/o1-mini ⭐⭐⭐
+- openai/gpt-4-turbo ⭐⭐⭐
+- openai/gpt-4 ⭐⭐⭐
+
+---
+
+> **TIP**: You can type ANY `provider/model` ID from the list above in the "Type your own answer" field. For example: `nvidia/nemotron-3-ultra-free`, `opencode/big-pickle`, `deepseek/deepseek-chat`, etc.
+
+---
+
+## Step 4: Call `question` tool to collect ALL settings
 
 **CRITICAL**: You MUST call the `question` tool with a `questions` array parameter. Each element in the array is an object with `header`, `question`, and `options`. Here is the EXACT call you must make:
 
@@ -190,9 +420,9 @@ question({
 
 ---
 
-## Step 4: Process Answers
+## Step 5: Process Answers
 
-Map the answers from Step 3 to a config object:
+Map the answers from Step 4 to a config object:
 
 ```
 config = {
@@ -221,7 +451,7 @@ config = {
 
 ---
 
-## Step 5: Save
+## Step 6: Save
 
 If answer["Save"] === "Save (Recommended)":
 1. Call `orchestrator_save_config` with the mapped config values:

@@ -147,7 +147,7 @@ When instructed to "PRINT THE MODEL REFERENCE BLOCK", output this exact content:
 - **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
 - **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
 - **mistral/mistral-large** (OpenRouter) — *Free tier available*
-- **nvidia/nemotron-3-ultra** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
 - **x-ai/grok-2** (OpenRouter) — *Free tier available*
 - **cohere/command-r-plus** (OpenRouter) — *Free tier available*
 - **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
@@ -161,8 +161,11 @@ When instructed to "PRINT THE MODEL REFERENCE BLOCK", output this exact content:
 ## 💻 IMPLEMENTATION Models (Coding, Code Generation, Refactoring)
 
 ### ⭐⭐⭐⭐⭐ Top Tier (Best for coding)
-- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
-- **nvidia/nemotron-70b** (OpenRouter) — *Free tier available*
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-omni-free** (OpenRouter) — *Free tier available*
 - **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
 - **deepseek/deepseek-coder** (OpenRouter) — *Free tier available*
 - **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
@@ -199,7 +202,8 @@ When instructed to "PRINT THE MODEL REFERENCE BLOCK", output this exact content:
 - **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
 - **mistral/mistral-large** (OpenRouter) — *Free tier available*
 - **openai/gpt-4o** (OpenAI) — *Paid*
-- **nvidia/nemotron-3-ultra** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-free** (OpenRouter) — *Free tier available*
 - **x-ai/grok-2** (OpenRouter) — *Free tier available*
 - **cohere/command-r-plus** (OpenRouter) — *Free tier available*
 
@@ -211,7 +215,11 @@ When instructed to "PRINT THE MODEL REFERENCE BLOCK", output this exact content:
 ## ⚡ REPETITIVE TASKS Models (DTOs, Tests, CRUD, Boilerplate, Docs)
 
 ### ⭐⭐⭐⭐⭐ Top Tier (Fastest & Cheapest)
-- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-omni-free** (OpenRouter) — *Free tier available*
 - **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
 
 ### ⭐⭐⭐⭐ Excellent
@@ -236,11 +244,15 @@ When instructed to "PRINT THE MODEL REFERENCE BLOCK", output this exact content:
 ## 🎯 FALLBACK Models (Universal fallbacks for any category)
 
 ### ⭐⭐⭐⭐⭐ Best Universal Fallbacks
+- **opencode/nemotron-3-ultra-free** (OpenCode Zen) — *Free, built-in*
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
 - **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
 - **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
 - **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
 - **google/gemini-2.5-flash** (Google) — *Free tier available*
-- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
 - **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
 
 ### ⭐⭐⭐⭐ Good Universal Fallbacks
@@ -260,12 +272,20 @@ When instructed to "PRINT THE MODEL REFERENCE BLOCK", output this exact content:
 - opencode/opencode-coder ⭐⭐⭐⭐
 - opencode/zen-coder ⭐⭐⭐
 - opencode/j1-mini-lg ⭐⭐⭐
+- opencode/nemotron-3-ultra-free ⭐⭐⭐⭐⭐
+- opencode/nemotron-3.5-lightning-free ⭐⭐⭐⭐⭐
 
 **NVIDIA (OpenRouter, Free tier):**
-- nvidia/nemotron-3.5-lightning ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3.5-lightning-free ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3.5-lightning-30b-a3b ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-ultra-free ⭐⭐⭐⭐⭐
 - nvidia/nemotron-3-ultra-550b-a55b ⭐⭐⭐⭐⭐
-- nvidia/nemotron-3-ultra ⭐⭐⭐⭐
-- nvidia/nemotron-70b ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-super-free ⭐⭐⭐⭐
+- nvidia/nemotron-3-super-120b-a12b ⭐⭐⭐⭐
+- nvidia/nemotron-3-nano-30b-a3b ⭐⭐⭐⭐
+- nvidia/nemotron-3.5-content-safety ⭐⭐⭐
+- nvidia/nemotron-3.5-content-safety-free ⭐⭐⭐
+- nvidia/nemotron-3-nano-omni-free ⭐⭐⭐
 
 **DeepSeek (OpenRouter, Free tier):**
 - deepseek/deepseek-reasoner ⭐⭐⭐⭐⭐

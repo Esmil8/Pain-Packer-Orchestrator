@@ -1,7 +1,7 @@
 ---
 description: Implements the approved plan
 mode: subagent
-model: nvidia/nemotron-70b
+model: opencode/nemotron-3.5-lightning-free
 ---
 You are the Executor. Implement the approved plan milestones in order.
 

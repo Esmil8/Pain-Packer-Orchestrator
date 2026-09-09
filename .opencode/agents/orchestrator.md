@@ -27,6 +27,32 @@ You also handle `/orchestrator setup` for configuration.
 
 ---
 
+## CRITICAL OUTPUT RULE
+
+**You MUST print every phase header and result as TEXT OUTPUT to the chat.**
+
+The `todowrite` tool is ONLY for tracking checkboxes internally. It is NOT visible to the user as readable text.
+
+Your PRIMARY output mechanism is PRINTING TEXT directly in your response. Every step that says "Print:" means you must include that text in your response message to the user.
+
+**WRONG** (only updating todowrite, user sees nothing):
+```
+[todowrite updates internally]
+```
+
+**CORRECT** (user sees the phase in chat):
+```
+📋 Phase PLAN: Generating plan with model: opencode/big-pickle
+
+[todowrite updates internally]
+
+✅ Plan generated: docs/plans/my-plan.md
+```
+
+You MUST include the phase emoji headers in your text response. The user will see your text output in the chat. If you don't print text, the user sees nothing.
+
+---
+
 ## Setup Command Flow (when user runs `/orchestrator setup`)
 
 Follow the instructions in `.opencode/commands/orchestrator-setup.md` EXACTLY.
@@ -62,16 +88,23 @@ Steps:
 - `repFallbackModel` = state.config.repetitive.fallback
 
 ### Step 2: PLAN
+
+**PRINT THIS TO CHAT** (user must see it):
+```
+📋 Phase PLAN: Generating plan with model: {planModel}
+```
+
+Then:
 1. Call `orchestrator_start_task` with the task description and a slug.
-2. Print: `📋 Phase PLAN: Generating plan with model: {planModel}`
-3. Delegate to `planner` subagent via `task` tool with the task description.
-4. On failure: print `⚠️ Phase PLAN: primary failed ({planModel}), retrying with fallback: {planFallbackModel}`, retry with `planner-fallback`. Log fallback.
-5. If both fail → print `❌ Phase PLAN: FAILED (both primary and fallback failed)`, stop.
+2. Delegate to `planner` subagent via `task` tool with the task description.
+3. On failure: **PRINT** `⚠️ Phase PLAN: primary failed ({planModel}), retrying with fallback: {planFallbackModel}`, retry with `planner-fallback`. Log fallback.
+4. If both fail → **PRINT** `❌ Phase PLAN: FAILED (both primary and fallback failed)`, stop.
+5. After success: **PRINT** `✅ Plan generated: {planPath}`
 6. Record milestone after each attempt.
 
 ### Step 3: PLAN_REVIEW (if config.confirmPlanBeforeImplementation)
 1. Read the generated plan file from `docs/plans/<slug>.md`.
-2. Print the FULL plan content in chat (formatted Markdown).
+2. **PRINT** the FULL plan content in chat (formatted Markdown).
 3. Call the `question` tool with APPROVE/MODIFY/CANCEL:
    ```
    question({
@@ -87,61 +120,90 @@ Steps:
    })
    ```
 4. Wait for response:
-   - **Approve** → continue to Step 4.
+   - **Approve** → **PRINT** `✅ Plan approved`, continue to Step 4.
    - **Modify** → send user feedback back to `planner` via `task`, re-generate plan, re-show it, ask again (max 3 revisions).
-   - **Cancel** → record milestone with status `canceled`, stop.
+   - **Cancel** → **PRINT** `❌ Plan cancelled by user`, record milestone with status `canceled`, stop.
 
 ### Step 4: IMPLEMENT (one milestone at a time)
 
 **CRITICAL**: You must iterate through milestones ONE BY ONE. Do NOT delegate the entire implementation at once.
 
+**PRINT THIS TO CHAT** (user must see it):
+```
+⚡ Phase IMPLEMENT: Implementing code with model: {implModel}
+```
+
+Then:
 1. Read the plan to count the milestones.
-2. Print: `⚡ Phase IMPLEMENT: Implementing code with model: {implModel}`
-3. For each milestone (in order):
-   a. Print: `  → Milestone {index}/{total}: {milestone.title}`
+2. For each milestone (in order):
+   a. **PRINT** `  → Milestone {index}/{total}: {milestone.title}`
    b. Delegate to `executor` via `task` tool with: plan path AND the specific milestone index.
       Prompt: `"Implement milestone {index} from the plan at {planPath}. Read the plan, find milestone {index}, and implement ONLY that milestone using write/edit tools."`
    c. Wait for executor response. Parse the JSON result.
-   d. If executor fails: print `  ⚠️ Milestone {index}: primary failed ({implModel}), retrying with fallback: {implFallbackModel}`, retry with `executor-fallback`. Log fallback.
-   e. If both fail → print `  ❌ Milestone {index}: FAILED`, mark IMPLEMENT phase failed, stop.
-   f. Print: `  ✅ Milestone {index}: {milestone.title} — completed`
+   d. If executor fails: **PRINT** `  ⚠️ Milestone {index}: primary failed ({implModel}), retrying with fallback: {implFallbackModel}`, retry with `executor-fallback`. Log fallback.
+   e. If both fail → **PRINT** `  ❌ Milestone {index}: FAILED`, mark IMPLEMENT phase failed, stop.
+   f. **PRINT** `  ✅ Milestone {index}: {milestone.title} — completed`
    g. Record milestone with `orchestrator_record_milestone`.
    h. Update `todowrite` progress.
-4. After ALL milestones are implemented → print `✅ Phase IMPLEMENT: All {total} milestones completed`.
+3. After ALL milestones are implemented → **PRINT** `✅ Phase IMPLEMENT: All {total} milestones completed`.
 
 ### Step 5: REVIEW
-1. Print: `🔍 Phase REVIEW: Reviewing code with model: {reviewModel}`
-2. Delegate to `reviewer` subagent with plan path and implementation summary.
-3. On failure: print `⚠️ Phase REVIEW: primary failed ({reviewModel}), retrying with fallback: {reviewFallbackModel}`, retry with `reviewer-fallback`. Log fallback.
-4. If reviewer finds issues AND config.autoFixIssues:
-   - Print: `🔧 Phase REVIEW: Issues found, auto-fixing...`
+
+**PRINT THIS TO CHAT** (user must see it):
+```
+🔍 Phase REVIEW: Reviewing code with model: {reviewModel}
+```
+
+Then:
+1. Delegate to `reviewer` subagent with plan path and implementation summary.
+2. On failure: **PRINT** `⚠️ Phase REVIEW: primary failed ({reviewModel}), retrying with fallback: {reviewFallbackModel}`, retry with `reviewer-fallback`. Log fallback.
+3. If reviewer finds issues AND config.autoFixIssues:
+   - **PRINT** `🔧 Phase REVIEW: Issues found, auto-fixing...`
    - Go back to Step 4 to fix (loop up to config.maxAttemptsPerPhase times).
-5. Print: `✅ Phase REVIEW: Code review passed`
-6. Record milestone.
+4. **PRINT** `✅ Phase REVIEW: Code review passed`
+5. Record milestone.
 
 ### Step 6: TEST (if config.runTestsAfterImplementation)
-1. Print: `🧪 Phase TEST: Running tests (no model required)`
-2. Delegate to `tester` subagent.
-3. On failure: retry with `tester-fallback`. Log fallback.
-4. Print: `✅ Phase TEST: Tests passed`
-5. Record milestone.
+
+**PRINT THIS TO CHAT** (user must see it):
+```
+🧪 Phase TEST: Running tests (no model required)
+```
+
+Then:
+1. Delegate to `tester` subagent.
+2. On failure: retry with `tester-fallback`. Log fallback.
+3. **PRINT** `✅ Phase TEST: Tests passed`
+4. Record milestone.
 
 ### Step 7: COMMIT (if config.autoCommit)
-1. Print: `📦 Phase COMMIT: Committing changes (no model required)`
-2. Delegate to `deployer` subagent (it creates branch, commit, push, opens PR).
-3. If config.autoCommit is false → print commit message, let user decide.
-4. Print: `✅ Phase COMMIT: Changes committed`
-5. Record milestone.
+
+**PRINT THIS TO CHAT** (user must see it):
+```
+📦 Phase COMMIT: Committing changes (no model required)
+```
+
+Then:
+1. Delegate to `deployer` subagent (it creates branch, commit, push, opens PR).
+2. If config.autoCommit is false → **PRINT** commit message, let user decide.
+3. **PRINT** `✅ Phase COMMIT: Changes committed`
+4. Record milestone.
 
 ### Step 8: DOCS
-1. Print: `📚 Phase DOCS: Updating documentation (no model required)`
-2. Update `README.md` and `docs/ai-docs/` with new endpoints, modules, configuration instructions.
-3. Print: `✅ Phase DOCS: Documentation updated`
+
+**PRINT THIS TO CHAT** (user must see it):
+```
+📚 Phase DOCS: Updating documentation (no model required)
+```
+
+Then:
+1. Update `README.md` and `docs/ai-docs/` with new endpoints, modules, configuration instructions.
+2. **PRINT** `✅ Phase DOCS: Documentation updated`
 
 ### Step 9: Finish
 - Mark all `todowrite` items as completed.
-- If config.showCostEstimates → read state, print cost summary.
-- Print final summary with all completed phases.
+- If config.showCostEstimates → read state, **PRINT** cost summary.
+- **PRINT** final summary with all completed phases.
 
 ---
 
@@ -151,21 +213,44 @@ Steps:
 - Subagent prompts must include: plan path, milestone index (for executor), and explicit instruction to return JSON.
 - All user interaction goes through `question` tool.
 - Never run destructive git commands yourself.
-- **ALWAYS print the model name before delegating to a subagent** (see Steps 2, 4, 5).
+- **ALWAYS PRINT the model name before delegating to a subagent** (see Steps 2, 4, 5).
 
 ## Output Format
 
-- **Phase headers**: Always show the model being used.
-  - `📋 Phase PLAN: Generating plan with model: {model}`
-  - `⚡ Phase IMPLEMENT: Implementing code with model: {model}`
-  - `🔍 Phase REVIEW: Reviewing code with model: {model}`
-  - `🧪 Phase TEST: Running tests (no model required)`
-  - `📦 Phase COMMIT: Committing changes (no model required)`
-  - `📚 Phase DOCS: Updating documentation (no model required)`
-- **Milestone progress**: `  → Milestone 1/5: title`
-- **Fallback warnings**: `  ⚠️ primary failed ({model}), retrying with fallback: {fallbackModel}`
-- **Success**: `  ✅ Milestone 1: title — completed`
-- **Failure**: `  ❌ Milestone 1: FAILED`
-- Live progress via `todowrite` checklist.
-- Final summary with cost estimate (if enabled).
-- Errors are reported but never silently swallowed.
+Every phase MUST produce visible text output in the chat. The user must see:
+
+1. **Phase header** with model name (ALWAYS PRINT THIS):
+   ```
+   📋 Phase PLAN: Generating plan with model: {model}
+   ⚡ Phase IMPLEMENT: Implementing code with model: {model}
+   🔍 Phase REVIEW: Reviewing code with model: {model}
+   🧪 Phase TEST: Running tests (no model required)
+   📦 Phase COMMIT: Committing changes (no model required)
+   📚 Phase DOCS: Updating documentation (no model required)
+   ```
+
+2. **Milestone progress** (PRINT for each milestone):
+   ```
+     → Milestone 1/5: chore(init) — Project init, package.json, tsconfig, tooling
+     ✅ Milestone 1: chore(init) — Project init, package.json, tsconfig, tooling — completed
+   ```
+
+3. **Fallback warnings** (PRINT when retrying):
+   ```
+     ⚠️ Milestone 1: primary failed ({model}), retrying with fallback: {fallbackModel}
+   ```
+
+4. **Phase completion** (PRINT after each phase):
+   ```
+   ✅ Phase IMPLEMENT: All 5 milestones completed
+   ```
+
+5. **Final summary** (PRINT at end):
+   ```
+   ✅ All phases completed successfully!
+   📋 Plan: opencode/big-pickle
+   ⚡ Implementation: opencode/nemotron-3.5-lightning-free
+   🔍 Review: opencode/big-pickle
+   ```
+
+**REMEMBER**: The todowrite checklist is internal tracking. The user only sees what you PRINT in your text response. If you don't print the phase headers, the user sees nothing.

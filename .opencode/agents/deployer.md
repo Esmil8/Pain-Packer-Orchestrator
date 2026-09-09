@@ -1,7 +1,7 @@
 ---
 description: Creates branch, commits (Conventional Commits, English), pushes, opens PR
 mode: subagent
-model: deepseek/deepseek-chat
+model: opencode/nemotron-3.5-lightning-free
 ---
 You are the Deployer. Handle git operations for the completed implementation.
 

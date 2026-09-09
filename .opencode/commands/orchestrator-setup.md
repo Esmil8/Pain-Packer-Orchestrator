@@ -14,7 +14,11 @@ Run the orchestrator setup wizard. Follow this exact flow:
 
 ### ⭐⭐⭐⭐⭐ Top Tier (Best for complex planning)
 - **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **opencode/nemotron-3-ultra-free** (OpenCode Zen) — *Free, built-in*
 - **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-120b-a12b** (OpenRouter) — *Free tier available*
 - **deepseek/deepseek-reasoner** (OpenRouter) — *Free tier available*
 - **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
 - **openai/o1-preview** (OpenAI) — *Paid*
@@ -25,7 +29,6 @@ Run the orchestrator setup wizard. Follow this exact flow:
 - **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
 - **qwen/qwen-2.5-72b** (OpenRouter) — *Free tier available*
 - **mistral/mistral-large** (OpenRouter) — *Free tier available*
-- **nvidia/nemotron-3-ultra** (OpenRouter) — *Free tier available*
 - **x-ai/grok-2** (OpenRouter) — *Free tier available*
 - **cohere/command-r-plus** (OpenRouter) — *Free tier available*
 - **anthropic/claude-3-5-sonnet-20241022** (Anthropic) — *Paid*
@@ -39,8 +42,11 @@ Run the orchestrator setup wizard. Follow this exact flow:
 ## 💻 IMPLEMENTATION Models (Coding, Code Generation, Refactoring)
 
 ### ⭐⭐⭐⭐⭐ Top Tier (Best for coding)
-- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
-- **nvidia/nemotron-70b** (OpenRouter) — *Free tier available*
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-omni-free** (OpenRouter) — *Free tier available*
 - **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
 - **deepseek/deepseek-coder** (OpenRouter) — *Free tier available*
 - **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
@@ -66,7 +72,11 @@ Run the orchestrator setup wizard. Follow this exact flow:
 
 ### ⭐⭐⭐⭐⭐ Top Tier
 - **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
+- **opencode/nemotron-3-ultra-free** (OpenCode Zen) — *Free, built-in*
 - **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-super-120b-a12b** (OpenRouter) — *Free tier available*
 - **anthropic/claude-sonnet-4** (Anthropic) — *Paid*
 
 ### ⭐⭐⭐⭐ Excellent
@@ -77,7 +87,6 @@ Run the orchestrator setup wizard. Follow this exact flow:
 - **meta-llama/llama-3.1-405b** (OpenRouter) — *Free tier available*
 - **mistral/mistral-large** (OpenRouter) — *Free tier available*
 - **openai/gpt-4o** (OpenAI) — *Paid*
-- **nvidia/nemotron-3-ultra** (OpenRouter) — *Free tier available*
 - **x-ai/grok-2** (OpenRouter) — *Free tier available*
 - **cohere/command-r-plus** (OpenRouter) — *Free tier available*
 
@@ -89,7 +98,11 @@ Run the orchestrator setup wizard. Follow this exact flow:
 ## ⚡ REPETITIVE TASKS Models (DTOs, Tests, CRUD, Boilerplate, Docs)
 
 ### ⭐⭐⭐⭐⭐ Top Tier (Fastest & Cheapest)
-- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-30b-a3b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-nano-omni-free** (OpenRouter) — *Free tier available*
 - **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
 
 ### ⭐⭐⭐⭐ Excellent
@@ -114,11 +127,15 @@ Run the orchestrator setup wizard. Follow this exact flow:
 ## 🎯 FALLBACK Models (Universal fallbacks for any category)
 
 ### ⭐⭐⭐⭐⭐ Best Universal Fallbacks
+- **opencode/nemotron-3-ultra-free** (OpenCode Zen) — *Free, built-in*
+- **opencode/nemotron-3.5-lightning-free** (OpenCode Zen) — *Free, built-in*
 - **nvidia/nemotron-3-ultra-550b-a55b** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3-ultra-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-free** (OpenRouter) — *Free tier available*
+- **nvidia/nemotron-3.5-lightning-30b-a3b** (OpenRouter) — *Free tier available*
 - **deepseek/deepseek-chat** (OpenRouter) — *Free tier available*
 - **opencode/big-pickle** (OpenCode Zen) — *Free, built-in*
 - **google/gemini-2.5-flash** (Google) — *Free tier available*
-- **nvidia/nemotron-3.5-lightning** (OpenRouter) — *Free tier available*
 - **opencode/grok-code-fast-1** (OpenCode Zen) — *Free, built-in*
 
 ### ⭐⭐⭐⭐ Good Universal Fallbacks
@@ -138,12 +155,20 @@ Run the orchestrator setup wizard. Follow this exact flow:
 - opencode/opencode-coder ⭐⭐⭐⭐
 - opencode/zen-coder ⭐⭐⭐
 - opencode/j1-mini-lg ⭐⭐⭐
+- opencode/nemotron-3-ultra-free ⭐⭐⭐⭐⭐
+- opencode/nemotron-3.5-lightning-free ⭐⭐⭐⭐⭐
 
 **NVIDIA (OpenRouter, Free tier):**
-- nvidia/nemotron-3.5-lightning ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3.5-lightning-free ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3.5-lightning-30b-a3b ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-ultra-free ⭐⭐⭐⭐⭐
 - nvidia/nemotron-3-ultra-550b-a55b ⭐⭐⭐⭐⭐
-- nvidia/nemotron-3-ultra ⭐⭐⭐⭐
-- nvidia/nemotron-70b ⭐⭐⭐⭐⭐
+- nvidia/nemotron-3-super-free ⭐⭐⭐⭐
+- nvidia/nemotron-3-super-120b-a12b ⭐⭐⭐⭐
+- nvidia/nemotron-3-nano-30b-a3b ⭐⭐⭐⭐
+- nvidia/nemotron-3.5-content-safety ⭐⭐⭐
+- nvidia/nemotron-3.5-content-safety-free ⭐⭐⭐
+- nvidia/nemotron-3-nano-omni-free ⭐⭐⭐
 
 **DeepSeek (OpenRouter, Free tier):**
 - deepseek/deepseek-reasoner ⭐⭐⭐⭐⭐
@@ -285,7 +310,11 @@ The single `question` call must contain these 13 items in its `questions` array.
   "custom": true,
   "options": [
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for deep reasoning & architecture" },
+    { "label": "opencode/nemotron-3-ultra-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Top tier reasoning" },
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Top tier reasoning" },
+    { "label": "nvidia/nemotron-3-ultra-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Top tier reasoning" },
+    { "label": "nvidia/nemotron-3-super-free (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Super Free - Strong reasoning" },
+    { "label": "nvidia/nemotron-3-super-120b-a12b (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Super 120B - Strong reasoning" },
     { "label": "deepseek/deepseek-reasoner (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Reasoner - Excellent reasoning model" },
     { "label": "anthropic/claude-sonnet-4 (Anthropic) ⭐⭐⭐⭐⭐", "description": "Claude Sonnet 4 - Best-in-class reasoning" },
     { "label": "google/gemini-2.5-pro (Google) ⭐⭐⭐⭐", "description": "Gemini 2.5 Pro - Excellent reasoning" },
@@ -304,8 +333,11 @@ The single `question` call must contain these 13 items in its `questions` array.
   "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Top tier reasoning" },
-    { "label": "deepseek/deepseek-reasoner (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Reasoner - Excellent reasoning model" },
+    { "label": "nvidia/nemotron-3-ultra-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Top tier reasoning" },
+    { "label": "nvidia/nemotron-3-super-free (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Super Free - Strong reasoning" },
+    { "label": "opencode/nemotron-3-ultra-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Top tier reasoning" },
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for deep reasoning & architecture" },
+    { "label": "deepseek/deepseek-reasoner (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Reasoner - Excellent reasoning model" },
     { "label": "google/gemini-2.5-pro (Google) ⭐⭐⭐⭐", "description": "Gemini 2.5 Pro - Excellent reasoning" },
     { "label": "meta-llama/llama-3.1-405b (Meta) ⭐⭐⭐⭐", "description": "Llama 3.1 405B - Massive context & reasoning" },
     { "label": "qwen/qwen-2.5-72b (Qwen) ⭐⭐⭐⭐", "description": "Qwen 2.5 72B - Strong reasoning model" },
@@ -322,8 +354,11 @@ The single `question` call must contain these 13 items in its `questions` array.
   "question": "Select Implementation Primary model",
   "custom": true,
   "options": [
-    { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Best for fast coding" },
-    { "label": "nvidia/nemotron-70b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 70B - Excellent code generation" },
+    { "label": "opencode/nemotron-3.5-lightning-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Best for fast coding" },
+    { "label": "nvidia/nemotron-3.5-lightning-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Best for fast coding" },
+    { "label": "nvidia/nemotron-3.5-lightning-30b-a3b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning 30B A3B" },
+    { "label": "nvidia/nemotron-3-nano-30b-a3b (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Nano 30B A3B" },
+    { "label": "nvidia/nemotron-3-nano-omni-free (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Nano Omni Free" },
     { "label": "deepseek/deepseek-chat (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Chat - Top tier coding model" },
     { "label": "deepseek/deepseek-coder (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Coder - Specialized for coding" },
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Fast OpenCode coding model" },
@@ -343,7 +378,9 @@ The single `question` call must contain these 13 items in its `questions` array.
   "options": [
     { "label": "deepseek/deepseek-chat (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Chat - Top tier coding model" },
     { "label": "deepseek/deepseek-coder (OpenRouter) ⭐⭐⭐⭐⭐", "description": "DeepSeek Coder - Specialized for coding" },
-    { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Best for fast coding" },
+    { "label": "opencode/nemotron-3.5-lightning-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Best for fast coding" },
+    { "label": "nvidia/nemotron-3.5-lightning-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Best for fast coding" },
+    { "label": "nvidia/nemotron-3.5-lightning-30b-a3b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning 30B A3B" },
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Fast OpenCode coding model" },
     { "label": "opencode/opencode-coder (OpenCode Zen) ⭐⭐⭐⭐", "description": "OpenCode Coder - Optimized for code gen" },
     { "label": "qwen/qwen-2.5-coder-32b (Qwen) ⭐⭐⭐⭐", "description": "Qwen 2.5 Coder 32B - Specialized coder" },
@@ -361,7 +398,11 @@ The single `question` call must contain these 13 items in its `questions` array.
   "custom": true,
   "options": [
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for code review & analysis" },
+    { "label": "opencode/nemotron-3-ultra-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Deep analysis capabilities" },
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Deep analysis capabilities" },
+    { "label": "nvidia/nemotron-3-ultra-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Deep analysis capabilities" },
+    { "label": "nvidia/nemotron-3-super-free (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Super Free - Strong analysis" },
+    { "label": "nvidia/nemotron-3-super-120b-a12b (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Super 120B - Strong analysis" },
     { "label": "anthropic/claude-sonnet-4 (Anthropic) ⭐⭐⭐⭐⭐", "description": "Claude Sonnet 4 - Best-in-class code review" },
     { "label": "deepseek/deepseek-reasoner (OpenRouter) ⭐⭐⭐⭐", "description": "DeepSeek Reasoner - Strong analytical reasoning" },
     { "label": "qwen/qwen-2.5-72b (Qwen) ⭐⭐⭐⭐", "description": "Qwen 2.5 72B - Strong review capabilities" },
@@ -380,7 +421,9 @@ The single `question` call must contain these 13 items in its `questions` array.
   "custom": true,
   "options": [
     { "label": "nvidia/nemotron-3-ultra-550b-a55b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra 550B - Deep analysis capabilities" },
+    { "label": "nvidia/nemotron-3-ultra-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Deep analysis capabilities" },
     { "label": "anthropic/claude-sonnet-4 (Anthropic) ⭐⭐⭐⭐⭐", "description": "Claude Sonnet 4 - Best-in-class code review" },
+    { "label": "opencode/nemotron-3-ultra-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3 Ultra Free - Deep analysis capabilities" },
     { "label": "opencode/big-pickle (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "OpenCode Big Pickle - Best for code review & analysis" },
     { "label": "deepseek/deepseek-reasoner (OpenRouter) ⭐⭐⭐⭐", "description": "DeepSeek Reasoner - Strong analytical reasoning" },
     { "label": "qwen/qwen-2.5-72b (Qwen) ⭐⭐⭐⭐", "description": "Qwen 2.5 72B - Strong review capabilities" },
@@ -398,7 +441,11 @@ The single `question` call must contain these 13 items in its `questions` array.
   "question": "Select Repetitive/Doc Primary model",
   "custom": true,
   "options": [
-    { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Fastest for repetitive tasks" },
+    { "label": "opencode/nemotron-3.5-lightning-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Fastest for repetitive tasks" },
+    { "label": "nvidia/nemotron-3.5-lightning-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Fastest for repetitive tasks" },
+    { "label": "nvidia/nemotron-3.5-lightning-30b-a3b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning 30B A3B" },
+    { "label": "nvidia/nemotron-3-nano-30b-a3b (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Nano 30B A3B" },
+    { "label": "nvidia/nemotron-3-nano-omni-free (OpenRouter) ⭐⭐⭐⭐", "description": "Nemotron 3 Nano Omni Free" },
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Optimized for speed" },
     { "label": "deepseek/deepseek-chat (OpenRouter) ⭐⭐⭐⭐", "description": "DeepSeek Chat - Fast & reliable" },
     { "label": "deepseek/deepseek-coder (OpenRouter) ⭐⭐⭐⭐", "description": "DeepSeek Coder - Good for boilerplate" },
@@ -418,7 +465,9 @@ The single `question` call must contain these 13 items in its `questions` array.
   "custom": true,
   "options": [
     { "label": "opencode/grok-code-fast-1 (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Grok Code Fast 1 - Optimized for speed" },
-    { "label": "nvidia/nemotron-3.5-lightning (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning - Fastest for repetitive tasks" },
+    { "label": "opencode/nemotron-3.5-lightning-free (OpenCode Zen) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Fastest for repetitive tasks" },
+    { "label": "nvidia/nemotron-3.5-lightning-free (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning Free - Fastest for repetitive tasks" },
+    { "label": "nvidia/nemotron-3.5-lightning-30b-a3b (OpenRouter) ⭐⭐⭐⭐⭐", "description": "Nemotron 3.5 Lightning 30B A3B" },
     { "label": "deepseek/deepseek-chat (OpenRouter) ⭐⭐⭐⭐", "description": "DeepSeek Chat - Fast & reliable" },
     { "label": "deepseek/deepseek-coder (OpenRouter) ⭐⭐⭐⭐", "description": "DeepSeek Coder - Good for boilerplate" },
     { "label": "qwen/qwen-3.7-flash (Qwen) ⭐⭐⭐⭐", "description": "Qwen 3.7 Flash - Very fast inference" },

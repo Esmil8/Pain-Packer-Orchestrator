@@ -1,7 +1,7 @@
 ---
 description: Creates a milestone-based implementation plan in English (fallback model)
 mode: subagent
-model: openai/gpt-4o
+model: nvidia/nemotron-3-ultra-550b-a55b
 ---
 You are the Planner (fallback). Create a clear, milestone-based implementation plan.
 

@@ -29,12 +29,20 @@ const MODEL_LIST = [
     { id: "opencode/opencode-coder", stars: "⭐⭐⭐⭐", desc: "Optimized for code gen" },
     { id: "opencode/zen-coder", stars: "⭐⭐⭐", desc: "Good for coding" },
     { id: "opencode/j1-mini-lg", stars: "⭐⭐⭐", desc: "Lightweight model" },
+    { id: "opencode/nemotron-3-ultra-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3 Ultra Free - Top tier reasoning" },
+    { id: "opencode/nemotron-3.5-lightning-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3.5 Lightning Free - Fast coding" },
   ]},
   { provider: "NVIDIA (OpenRouter, Free tier)", models: [
-    { id: "nvidia/nemotron-3.5-lightning", stars: "⭐⭐⭐⭐⭐", desc: "Best for fast coding" },
-    { id: "nvidia/nemotron-3-ultra-550b-a55b", stars: "⭐⭐⭐⭐⭐", desc: "Top tier reasoning" },
-    { id: "nvidia/nemotron-3-ultra", stars: "⭐⭐⭐⭐", desc: "Strong reasoning" },
-    { id: "nvidia/nemotron-70b", stars: "⭐⭐⭐⭐⭐", desc: "Excellent code generation" },
+    { id: "nvidia/nemotron-3.5-lightning-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3.5 Lightning Free - Best for fast coding" },
+    { id: "nvidia/nemotron-3.5-lightning-30b-a3b", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3.5 Lightning 30B A3B" },
+    { id: "nvidia/nemotron-3-ultra-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3 Ultra Free - Top tier reasoning" },
+    { id: "nvidia/nemotron-3-ultra-550b-a55b", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3 Ultra 550B A55B - Top tier reasoning" },
+    { id: "nvidia/nemotron-3-super-free", stars: "⭐⭐⭐⭐", desc: "Nemotron 3 Super Free - Strong reasoning" },
+    { id: "nvidia/nemotron-3-super-120b-a12b", stars: "⭐⭐⭐⭐", desc: "Nemotron 3 Super 120B A12B" },
+    { id: "nvidia/nemotron-3-nano-30b-a3b", stars: "⭐⭐⭐⭐", desc: "Nemotron 3 Nano 30B A3B" },
+    { id: "nvidia/nemotron-3.5-content-safety", stars: "⭐⭐⭐", desc: "Nemotron 3.5 Content Safety" },
+    { id: "nvidia/nemotron-3.5-content-safety-free", stars: "⭐⭐⭐", desc: "Nemotron 3.5 Content Safety Free" },
+    { id: "nvidia/nemotron-3-nano-omni-free", stars: "⭐⭐⭐", desc: "Nemotron 3 Nano Omni Free" },
   ]},
   { provider: "DeepSeek (OpenRouter, Free tier)", models: [
     { id: "deepseek/deepseek-reasoner", stars: "⭐⭐⭐⭐⭐", desc: "Excellent reasoning model" },
@@ -151,8 +159,14 @@ function syncAgentModels(config: any): void {
   };
   for (const [role, files] of Object.entries(roleAgents)) {
     const roleConfig = config[role] || DEFAULT_CONFIG[role];
-    for (const name of files.primary) setAgentModel(name, roleConfig.primary);
-    for (const name of files.fallback) setAgentModel(name, roleConfig.fallback);
+    for (const name of files.primary) {
+      setAgentModel(name, roleConfig.primary);
+      console.log(`[orchestrator] Applied primary model "${roleConfig.primary}" to agent ${name}.md`);
+    }
+    for (const name of files.fallback) {
+      setAgentModel(name, roleConfig.fallback);
+      console.log(`[orchestrator] Applied fallback model "${roleConfig.fallback}" to agent ${name}.md`);
+    }
   }
 }
 
@@ -163,8 +177,11 @@ const PRICE_TABLE: Array<{ prefix: string; in: number; out: number }> = [
   { prefix: "openai/gpt-4o-mini", in: 0.15, out: 0.6 },
   { prefix: "google/gemini-2.5-flash", in: 0.075, out: 0.3 },
   { prefix: "deepseek/deepseek-chat", in: 0.27, out: 1.1 },
-  { prefix: "nvidia/nemotron-70b", in: 0.5, out: 1.5 },
-  { prefix: "opencode/", in: 0.25, out: 1.0 },
+  { prefix: "nvidia/nemotron-3-ultra-550b-a55b", in: 0.5, out: 1.5 },
+  { prefix: "nvidia/nemotron-3-ultra-free", in: 0, out: 0 },
+  { prefix: "nvidia/nemotron-3.5-lightning-free", in: 0, out: 0 },
+  { prefix: "nvidia/", in: 0.27, out: 1.1 },
+  { prefix: "opencode/", in: 0, out: 0 },
 ];
 
 function estimateCost(model: string, tokensIn: number, tokensOut: number): number {
@@ -319,9 +336,25 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
             timeoutPerPhaseSeconds: Math.min(3600, Math.max(30, args.timeoutPerPhaseSeconds)),
             costThresholdForConfirmationUsd: Math.max(0, args.costThresholdForConfirmationUsd),
           };
-          state.config = { ...clamped, ui: { language: "en" } };
+          const nestedConfig = {
+            planning: { primary: clamped.planningPrimary, fallback: clamped.planningFallback },
+            implementation: { primary: clamped.implementationPrimary, fallback: clamped.implementationFallback },
+            review: { primary: clamped.reviewPrimary, fallback: clamped.reviewFallback },
+            repetitive: { primary: clamped.repetitivePrimary, fallback: clamped.repetitiveFallback },
+            confirmPlanBeforeImplementation: clamped.confirmPlanBeforeImplementation,
+            autoFixIssues: clamped.autoFixIssues,
+            runTestsAfterImplementation: clamped.runTestsAfterImplementation,
+            autoCommit: clamped.autoCommit,
+            showCostEstimates: clamped.showCostEstimates,
+            maxAttemptsPerPhase: clamped.maxAttemptsPerPhase,
+            timeoutPerPhaseSeconds: clamped.timeoutPerPhaseSeconds,
+            costThresholdForConfirmationUsd: clamped.costThresholdForConfirmationUsd,
+            ui: { language: "en" },
+          };
+          state.config = nestedConfig;
           await syncAgentModels(state.config);
           writeState(state);
+          client.app.log({ body: { service: "orchestrator", level: "info", message: "Configuration saved and synced to agents", extra: { config: nestedConfig } } });
           return JSON.stringify(state.config);
         },
       }),

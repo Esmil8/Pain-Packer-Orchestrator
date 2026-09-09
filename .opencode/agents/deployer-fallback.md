@@ -1,7 +1,7 @@
 ---
 description: Creates branch, commits (Conventional Commits, English), pushes, opens PR (fallback model)
 mode: subagent
-model: openai/gpt-4o-mini
+model: opencode/grok-code-fast-1
 ---
 You are the Deployer (fallback). Handle git operations for the completed implementation.
 

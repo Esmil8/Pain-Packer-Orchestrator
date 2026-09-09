@@ -1,7 +1,7 @@
 ---
 description: Reviews implementation against plan and conventions (fallback model)
 mode: subagent
-model: openai/gpt-4o
+model: nvidia/nemotron-3-ultra-550b-a55b
 ---
 You are the Reviewer (fallback). Review the implementation against the plan and AGENTS.md conventions.
 

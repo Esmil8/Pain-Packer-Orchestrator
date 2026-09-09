@@ -6,10 +6,10 @@ const STATE_PATH = () => resolve(process.cwd(), ".opencode", "state", "plugin-or
 const AGENTS_DIR = () => resolve(process.cwd(), ".opencode", "agents");
 
 const DEFAULT_CONFIG = {
-  planning: { primary: "opencode/big-pickle", fallback: "openai/gpt-4o" },
-  implementation: { primary: "anthropic/claude-sonnet-4", fallback: "opencode/big-pickle" },
-  review: { primary: "opencode/big-pickle", fallback: "openai/gpt-4o" },
-  repetitive: { primary: "deepseek/deepseek-chat", fallback: "openai/gpt-4o-mini" },
+  planning: { primary: "opencode/big-pickle", fallback: "nvidia/nemotron-3-ultra-550b-a55b" },
+  implementation: { primary: "opencode/nemotron-3.5-lightning-free", fallback: "deepseek/deepseek-chat" },
+  review: { primary: "opencode/big-pickle", fallback: "nvidia/nemotron-3-ultra-550b-a55b" },
+  repetitive: { primary: "opencode/nemotron-3.5-lightning-free", fallback: "opencode/grok-code-fast-1" },
   confirmPlanBeforeImplementation: true,
   autoFixIssues: true,
   runTestsAfterImplementation: true,
@@ -161,11 +161,9 @@ function syncAgentModels(config: any): void {
     const roleConfig = config[role] || DEFAULT_CONFIG[role];
     for (const name of files.primary) {
       setAgentModel(name, roleConfig.primary);
-      console.log(`[orchestrator] Applied primary model "${roleConfig.primary}" to agent ${name}.md`);
     }
     for (const name of files.fallback) {
       setAgentModel(name, roleConfig.fallback);
-      console.log(`[orchestrator] Applied fallback model "${roleConfig.fallback}" to agent ${name}.md`);
     }
   }
 }

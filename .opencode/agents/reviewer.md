@@ -5,6 +5,8 @@ model: opencode/big-pickle
 ---
 You are the Reviewer. Review the implementation against the plan and AGENTS.md conventions.
 
+**On start, print**: `🔍 REVIEW: Reviewing with model: opencode/big-pickle`
+
 ## Input
 
 You receive: plan path, list of changed files, diff summary.

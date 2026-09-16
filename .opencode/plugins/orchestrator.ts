@@ -21,86 +21,116 @@ const DEFAULT_CONFIG = {
   ui: { language: "en" },
 };
 
-const MODEL_LIST = [
-  { provider: "OpenCode (Built-in, ALL FREE)", models: [
-    { id: "opencode/big-pickle", stars: "⭐⭐⭐⭐⭐", desc: "Best for deep reasoning & architecture" },
-    { id: "opencode/grok-code-fast-1", stars: "⭐⭐⭐⭐⭐", desc: "Fast OpenCode coding model" },
-    { id: "opencode/quasar-alpha", stars: "⭐⭐⭐⭐", desc: "Fast OpenCode model" },
-    { id: "opencode/opencode-coder", stars: "⭐⭐⭐⭐", desc: "Optimized for code gen" },
-    { id: "opencode/zen-coder", stars: "⭐⭐⭐", desc: "Good for coding" },
-    { id: "opencode/j1-mini-lg", stars: "⭐⭐⭐", desc: "Lightweight model" },
-    { id: "opencode/nemotron-3-ultra-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3 Ultra Free - Top tier reasoning" },
-    { id: "opencode/nemotron-3.5-lightning-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3.5 Lightning Free - Fast coding" },
-  ]},
-  { provider: "NVIDIA (OpenRouter, Free tier)", models: [
-    { id: "nvidia/nemotron-3.5-lightning-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3.5 Lightning Free - Best for fast coding" },
-    { id: "nvidia/nemotron-3.5-lightning-30b-a3b", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3.5 Lightning 30B A3B" },
-    { id: "nvidia/nemotron-3-ultra-free", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3 Ultra Free - Top tier reasoning" },
-    { id: "nvidia/nemotron-3-ultra-550b-a55b", stars: "⭐⭐⭐⭐⭐", desc: "Nemotron 3 Ultra 550B A55B - Top tier reasoning" },
-    { id: "nvidia/nemotron-3-super-free", stars: "⭐⭐⭐⭐", desc: "Nemotron 3 Super Free - Strong reasoning" },
-    { id: "nvidia/nemotron-3-super-120b-a12b", stars: "⭐⭐⭐⭐", desc: "Nemotron 3 Super 120B A12B" },
-    { id: "nvidia/nemotron-3-nano-30b-a3b", stars: "⭐⭐⭐⭐", desc: "Nemotron 3 Nano 30B A3B" },
-    { id: "nvidia/nemotron-3.5-content-safety", stars: "⭐⭐⭐", desc: "Nemotron 3.5 Content Safety" },
-    { id: "nvidia/nemotron-3.5-content-safety-free", stars: "⭐⭐⭐", desc: "Nemotron 3.5 Content Safety Free" },
-    { id: "nvidia/nemotron-3-nano-omni-free", stars: "⭐⭐⭐", desc: "Nemotron 3 Nano Omni Free" },
-  ]},
-  { provider: "DeepSeek (OpenRouter, Free tier)", models: [
-    { id: "deepseek/deepseek-reasoner", stars: "⭐⭐⭐⭐⭐", desc: "Excellent reasoning model" },
-    { id: "deepseek/deepseek-chat", stars: "⭐⭐⭐⭐⭐", desc: "Top tier coding model" },
-    { id: "deepseek/deepseek-coder", stars: "⭐⭐⭐⭐⭐", desc: "Specialized for coding" },
-  ]},
-  { provider: "Qwen (OpenRouter, Free tier)", models: [
-    { id: "qwen/qwen-2.5-72b", stars: "⭐⭐⭐⭐", desc: "Strong reasoning model" },
-    { id: "qwen/qwen-2.5-coder-32b", stars: "⭐⭐⭐⭐", desc: "Specialized coder" },
-    { id: "qwen/qwen-3.7-flash", stars: "⭐⭐⭐⭐", desc: "Very fast inference" },
-    { id: "qwen/qwq-32b", stars: "⭐⭐⭐⭐", desc: "Strong reasoning" },
-  ]},
-  { provider: "Google (Free tier)", models: [
-    { id: "google/gemini-2.5-flash", stars: "⭐⭐⭐⭐", desc: "Fast & cost-effective" },
-    { id: "google/gemini-2.5-pro", stars: "⭐⭐⭐⭐", desc: "Excellent reasoning" },
-    { id: "google/gemini-1.5-flash", stars: "⭐⭐⭐", desc: "Fast & capable" },
-    { id: "google/gemini-1.5-pro", stars: "⭐⭐⭐", desc: "Good reasoning" },
-  ]},
-  { provider: "Meta/Llama (OpenRouter, Free tier)", models: [
-    { id: "meta-llama/llama-3.1-405b", stars: "⭐⭐⭐⭐", desc: "Massive context & reasoning" },
-    { id: "meta-llama/llama-3.1-70b", stars: "⭐⭐⭐⭐", desc: "Strong model" },
-    { id: "meta-llama/llama-3.1-8b", stars: "⭐⭐⭐", desc: "Efficient small model" },
-    { id: "meta-llama/llama-3.2-90b", stars: "⭐⭐⭐", desc: "Large context" },
-    { id: "meta-llama/llama-3.2-11b", stars: "⭐⭐⭐", desc: "Efficient model" },
-  ]},
-  { provider: "Mistral (OpenRouter, Free tier)", models: [
-    { id: "mistral/mistral-large", stars: "⭐⭐⭐⭐", desc: "Strong analytical skills" },
-    { id: "mistral/mistral-nemo", stars: "⭐⭐⭐⭐", desc: "Efficient small model" },
-    { id: "mistral/codestral", stars: "⭐⭐⭐⭐", desc: "Purpose-built for code" },
-  ]},
-  { provider: "Z.ai/GLM (OpenRouter, Free tier)", models: [
-    { id: "z-ai/glm-4.5", stars: "⭐⭐⭐⭐", desc: "Strong reasoning capabilities" },
-    { id: "z-ai/glm-4.5-air", stars: "⭐⭐⭐", desc: "Lightweight model" },
-  ]},
-  { provider: "xAI (OpenRouter, Free tier)", models: [
-    { id: "x-ai/grok-2", stars: "⭐⭐⭐⭐", desc: "Strong reasoning" },
-    { id: "x-ai/grok-2-mini", stars: "⭐⭐⭐", desc: "Lightweight model" },
-  ]},
-  { provider: "Cohere (OpenRouter, Free tier)", models: [
-    { id: "cohere/command-r-plus", stars: "⭐⭐⭐⭐", desc: "Strong capabilities" },
-    { id: "cohere/command-r", stars: "⭐⭐⭐", desc: "Efficient model" },
-  ]},
-  { provider: "Anthropic (Paid)", models: [
-    { id: "anthropic/claude-sonnet-4", stars: "⭐⭐⭐⭐⭐", desc: "Best-in-class reasoning" },
-    { id: "anthropic/claude-3-5-sonnet-20241022", stars: "⭐⭐⭐⭐", desc: "Excellent reasoning" },
-    { id: "anthropic/claude-haiku-4-5", stars: "⭐⭐⭐", desc: "Fast & cheap" },
-    { id: "anthropic/claude-3-5-haiku-20241022", stars: "⭐⭐⭐", desc: "Fast & cheap" },
-    { id: "anthropic/claude-3-opus-20240229", stars: "⭐⭐⭐", desc: "Legacy model" },
-  ]},
-  { provider: "OpenAI (Paid)", models: [
-    { id: "openai/gpt-4o", stars: "⭐⭐⭐⭐", desc: "Strong model" },
-    { id: "openai/gpt-4o-mini", stars: "⭐⭐⭐", desc: "Cheap & fast" },
-    { id: "openai/o1-preview", stars: "⭐⭐⭐⭐", desc: "Reasoning model" },
-    { id: "openai/o1-mini", stars: "⭐⭐⭐", desc: "Fast reasoning" },
-    { id: "openai/gpt-4-turbo", stars: "⭐⭐⭐", desc: "Legacy model" },
-    { id: "openai/gpt-4", stars: "⭐⭐⭐", desc: "Legacy model" },
-  ]},
-];
+type ModelEntry = { id: string; provider: string; available: boolean };
+type ModelCategory = { provider: string; models: ModelEntry[] };
+
+let modelCache: ModelCategory[] | null = null;
+let modelCacheTimestamp = 0;
+const MODEL_CACHE_TTL_MS = 5 * 60 * 1000;
+
+async function discoverModels(client: any): Promise<ModelCategory[]> {
+  const now = Date.now();
+  if (modelCache && now - modelCacheTimestamp < MODEL_CACHE_TTL_MS) {
+    return modelCache;
+  }
+
+  try {
+    const providers = await client.config?.providers();
+    const list = providers?.providers ?? providers?.data?.providers ?? providers?.data;
+    if (Array.isArray(list) && list.length > 0) {
+      const categories: ModelCategory[] = [];
+      for (const provider of list) {
+        const models = provider.models;
+        if (!models || Object.keys(models).length === 0) continue;
+        const entries: ModelEntry[] = Object.entries(models).map(([key, m]: [string, any]) => ({
+          id: (m?.id ?? key) as string,
+          provider: provider.id ?? key.split("/")[0] ?? "unknown",
+          available: true,
+        }));
+        categories.push({ provider: provider.name ?? provider.id, models: entries });
+      }
+      if (categories.length > 0) {
+        modelCache = categories;
+        modelCacheTimestamp = now;
+        return modelCache;
+      }
+    }
+  } catch {
+    // fall through to curated fallback
+  }
+
+  return getCuratedFallback();
+}
+
+function getCuratedFallback(): ModelCategory[] {
+  return [
+    { provider: "OpenCode", models: [
+      { id: "opencode/big-pickle", provider: "opencode", available: true },
+      { id: "opencode/grok-code-fast-1", provider: "opencode", available: true },
+      { id: "opencode/nemotron-3-ultra-free", provider: "opencode", available: true },
+      { id: "opencode/nemotron-3.5-lightning-free", provider: "opencode", available: true },
+    ]},
+    { provider: "NVIDIA", models: [
+      { id: "nvidia/nemotron-3-ultra-550b-a55b", provider: "nvidia", available: true },
+      { id: "nvidia/nemotron-3-ultra-free", provider: "nvidia", available: true },
+      { id: "nvidia/nemotron-3.5-lightning-free", provider: "nvidia", available: true },
+    ]},
+    { provider: "DeepSeek", models: [
+      { id: "deepseek/deepseek-chat", provider: "deepseek", available: true },
+      { id: "deepseek/deepseek-reasoner", provider: "deepseek", available: true },
+    ]},
+    { provider: "Google", models: [
+      { id: "google/gemini-2.5-flash", provider: "google", available: true },
+      { id: "google/gemini-2.5-pro", provider: "google", available: true },
+    ]},
+    { provider: "Anthropic", models: [
+      { id: "anthropic/claude-sonnet-4", provider: "anthropic", available: true },
+      { id: "anthropic/claude-haiku-4-5", provider: "anthropic", available: true },
+    ]},
+    { provider: "OpenAI", models: [
+      { id: "openai/gpt-4o", provider: "openai", available: true },
+      { id: "openai/gpt-4o-mini", provider: "openai", available: true },
+    ]},
+  ];
+}
+
+async function validateModelViaAPI(modelId: string): Promise<{ ok: boolean; response?: string; error?: string }> {
+  const provider = modelId.split("/")[0] ?? "unknown";
+  const endpoints: Record<string, string> = {
+    opencode: "https://api.opencode.ai/v1/chat/completions",
+    anthropic: "https://api.anthropic.com/v1/messages",
+    openai: "https://api.openai.com/v1/chat/completions",
+    google: "https://generativelanguage.googleapis.com/v1beta/models",
+  };
+  const endpoint = endpoints[provider] || `https://openrouter.ai/api/v1/chat/completions`;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        model: modelId,
+        messages: [{ role: "user", content: "Say OK" }],
+        max_tokens: 10,
+      }),
+      signal: AbortSignal.timeout(15000),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      return { ok: false, error: `HTTP ${res.status}: ${body.slice(0, 200)}` };
+    }
+    const data = await res.json() as any;
+    const text = data.choices?.[0]?.message?.content?.trim()
+      ?? data.content?.[0]?.text?.trim()
+      ?? "";
+    if (text.includes("OK")) {
+      return { ok: true, response: text };
+    }
+    return { ok: false, response: text, error: "Unexpected response" };
+  } catch (err: any) {
+    return { ok: false, error: err.message || String(err) };
+  }
+}
 
 function readState(): any {
   const path = STATE_PATH();
@@ -271,7 +301,7 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
         },
       }),
       orchestrator_validate_model: tool({
-        description: "Test a model with a simple prompt to verify it's working.",
+        description: "Test a model with a simple prompt to verify it's working. Sends 'Say OK' and checks the response.",
         args: validateModelArgs,
         async execute(args) {
           try {
@@ -286,26 +316,18 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
               const ok = text === "OK" || text === "'OK'" || text.includes("OK");
               return JSON.stringify({ ok, response: text, error: ok ? null : "Unexpected response" });
             }
-            const allModelIds = new Set<string>();
-            for (const category of MODEL_LIST) {
-              for (const m of category.models) {
-                allModelIds.add(m.id);
-              }
-            }
-            if (allModelIds.has(args.model) || args.model.includes("/")) {
-              return JSON.stringify({ ok: true, response: "OK", error: null });
-            }
-            return JSON.stringify({ ok: false, response: null, error: "Model not found in catalog" });
+            return JSON.stringify(await validateModelViaAPI(args.model as string));
           } catch (err: any) {
             return JSON.stringify({ ok: false, response: null, error: err.message || String(err) });
           }
         },
       }),
       orchestrator_get_model_list: tool({
-        description: "Get the complete list of available models grouped by provider.",
+        description: "Get the complete list of available models grouped by provider. Uses dynamic discovery with 5-minute cache.",
         args: getModelListArgs,
         async execute() {
-          return JSON.stringify(MODEL_LIST);
+          const categories = await discoverModels(client);
+          return JSON.stringify(categories);
         },
       }),
       orchestrator_get_fallback: tool({
@@ -334,6 +356,33 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
             timeoutPerPhaseSeconds: Math.min(3600, Math.max(30, args.timeoutPerPhaseSeconds)),
             costThresholdForConfirmationUsd: Math.max(0, args.costThresholdForConfirmationUsd),
           };
+          const modelFields: Array<[string, string]> = [
+            ["planningPrimary", clamped.planningPrimary],
+            ["planningFallback", clamped.planningFallback],
+            ["implementationPrimary", clamped.implementationPrimary],
+            ["implementationFallback", clamped.implementationFallback],
+            ["reviewPrimary", clamped.reviewPrimary],
+            ["reviewFallback", clamped.reviewFallback],
+            ["repetitivePrimary", clamped.repetitivePrimary],
+            ["repetitiveFallback", clamped.repetitiveFallback],
+          ];
+          const knownModels = new Set<string>();
+          const categories = await discoverModels(client);
+          for (const category of categories) {
+            for (const m of category.models) {
+              knownModels.add(m.id);
+            }
+          }
+          if (knownModels.size > 0) {
+            const unknown = modelFields.filter(([field, model]) => !knownModels.has(model));
+            if (unknown.length > 0) {
+              const names = unknown.map(([field, model]) => `${field}=${model}`).join(", ");
+              return JSON.stringify({
+                ok: false,
+                error: `Unknown models: ${names}. Run orchestrator_get_model_list first or validate with orchestrator_validate_model.`,
+              });
+            }
+          }
           const nestedConfig = {
             planning: { primary: clamped.planningPrimary, fallback: clamped.planningFallback },
             implementation: { primary: clamped.implementationPrimary, fallback: clamped.implementationFallback },
@@ -353,7 +402,7 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
           await syncAgentModels(state.config);
           writeState(state);
           client.app.log({ body: { service: "orchestrator", level: "info", message: "Configuration saved and synced to agents", extra: { config: nestedConfig } } });
-          return JSON.stringify(state.config);
+          return JSON.stringify({ ok: true, config: state.config });
         },
       }),
       orchestrator_start_task: tool({

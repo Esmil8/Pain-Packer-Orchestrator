@@ -124,6 +124,13 @@ If answer["Save"] === "Save (Recommended)":
    - `costThresholdForConfirmationUsd`
 2. If the tool returns `{ "ok": false, "error": "..." }`, show the error to the user and ask them to re-select a valid model.
 3. On success, print "Configuration saved and synced to all agents."
+4. **ALWAYS print this restart warning** (agent models are cached at session start):
+
+   ```
+   ⚠️ IMPORTANT: Restart OpenCode for the new agent models to take effect.
+   Agent models are cached when the session starts (~/.local/share/opencode/opencode.db);
+   changes to .opencode/agents/*.md are not re-read until you restart.
+   ```
 
 If answer["Save"] === "Cancel":
 - Print "Setup cancelled. No changes applied."

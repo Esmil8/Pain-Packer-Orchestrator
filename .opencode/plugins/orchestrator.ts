@@ -24,6 +24,12 @@ const DEFAULT_CONFIG = {
 type ModelEntry = { id: string; provider: string; available: boolean };
 type ModelCategory = { provider: string; models: ModelEntry[] };
 
+function normalizeModelId(modelId: string): string {
+  const id = modelId.trim();
+  if (!id) return id;
+  return id.includes("/") ? id : `opencode/${id}`;
+}
+
 let modelCache: ModelCategory[] | null = null;
 let modelCacheTimestamp = 0;
 const MODEL_CACHE_TTL_MS = 5 * 60 * 1000;
@@ -43,7 +49,7 @@ async function discoverModels(client: any): Promise<ModelCategory[]> {
         const models = provider.models;
         if (!models || Object.keys(models).length === 0) continue;
         const entries: ModelEntry[] = Object.entries(models).map(([key, m]: [string, any]) => ({
-          id: (m?.id ?? key) as string,
+          id: normalizeModelId((m?.id ?? key) as string),
           provider: provider.id ?? key.split("/")[0] ?? "unknown",
           available: true,
         }));
@@ -173,7 +179,13 @@ function setAgentModel(name: string, model: string): void {
   }
   try {
     const content = readFileSync(agentPath, "utf-8");
-    const updated = content.replace(/^model:.*$/m, `model: ${model}`);
+    const normalized = normalizeModelId(model);
+    let updated: string;
+    if (/^model:.*$/m.test(content)) {
+      updated = content.replace(/^model:.*$/m, `model: ${normalized}`);
+    } else {
+      updated = content.replace(/^mode:\s*[\w-]+$/m, (match: string) => `${match}\nmodel: ${normalized}`);
+    }
     writeFileSync(agentPath, updated);
   } catch {
     // ignore
@@ -356,15 +368,25 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
             timeoutPerPhaseSeconds: Math.min(3600, Math.max(30, args.timeoutPerPhaseSeconds)),
             costThresholdForConfirmationUsd: Math.max(0, args.costThresholdForConfirmationUsd),
           };
+          const normalized = {
+            planningPrimary: normalizeModelId(clamped.planningPrimary),
+            planningFallback: normalizeModelId(clamped.planningFallback),
+            implementationPrimary: normalizeModelId(clamped.implementationPrimary),
+            implementationFallback: normalizeModelId(clamped.implementationFallback),
+            reviewPrimary: normalizeModelId(clamped.reviewPrimary),
+            reviewFallback: normalizeModelId(clamped.reviewFallback),
+            repetitivePrimary: normalizeModelId(clamped.repetitivePrimary),
+            repetitiveFallback: normalizeModelId(clamped.repetitiveFallback),
+          };
           const modelFields: Array<[string, string]> = [
-            ["planningPrimary", clamped.planningPrimary],
-            ["planningFallback", clamped.planningFallback],
-            ["implementationPrimary", clamped.implementationPrimary],
-            ["implementationFallback", clamped.implementationFallback],
-            ["reviewPrimary", clamped.reviewPrimary],
-            ["reviewFallback", clamped.reviewFallback],
-            ["repetitivePrimary", clamped.repetitivePrimary],
-            ["repetitiveFallback", clamped.repetitiveFallback],
+            ["planningPrimary", normalized.planningPrimary],
+            ["planningFallback", normalized.planningFallback],
+            ["implementationPrimary", normalized.implementationPrimary],
+            ["implementationFallback", normalized.implementationFallback],
+            ["reviewPrimary", normalized.reviewPrimary],
+            ["reviewFallback", normalized.reviewFallback],
+            ["repetitivePrimary", normalized.repetitivePrimary],
+            ["repetitiveFallback", normalized.repetitiveFallback],
           ];
           const knownModels = new Set<string>();
           const categories = await discoverModels(client);
@@ -384,10 +406,10 @@ export const OrchestratorPlugin: Plugin = async ({ client, directory }) => {
             }
           }
           const nestedConfig = {
-            planning: { primary: clamped.planningPrimary, fallback: clamped.planningFallback },
-            implementation: { primary: clamped.implementationPrimary, fallback: clamped.implementationFallback },
-            review: { primary: clamped.reviewPrimary, fallback: clamped.reviewFallback },
-            repetitive: { primary: clamped.repetitivePrimary, fallback: clamped.repetitiveFallback },
+            planning: { primary: normalized.planningPrimary, fallback: normalized.planningFallback },
+            implementation: { primary: normalized.implementationPrimary, fallback: normalized.implementationFallback },
+            review: { primary: normalized.reviewPrimary, fallback: normalized.reviewFallback },
+            repetitive: { primary: normalized.repetitivePrimary, fallback: normalized.repetitiveFallback },
             confirmPlanBeforeImplementation: clamped.confirmPlanBeforeImplementation,
             autoFixIssues: clamped.autoFixIssues,
             runTestsAfterImplementation: clamped.runTestsAfterImplementation,
